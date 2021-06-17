@@ -1,30 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Time Tracker</title>
 
-    <title>Hello world!</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="actions">
+		<button class="edit-raw" id="edit-raw" title="Edit raw data">&#128393; <span>Edit</span></button>
+		<button class="export" id="export" title="Export day">&#128441; <span>Export</span></button>
+		<button class="connect-data" id="connect-data" title="Connect to online data source">&rlarr; <span>Connect</span></button>
+	</div>
 
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
+	<div class="date-selector">
+		<button class="previous-day" id="prev-day">&larr;</button>
+		<span id="current-date">Today</span>
+		<button class="next-day" id="next-day">&rarr;</button>
+	</div>
 
-    <!-- import the webpage's javascript file -->
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <!-- this is the start of content -->
-    <h1>
-      Hello World!
-    </h1>
-    <p>
-      This starter gives you everything you need to start working on a new
-      website, and nothing more. If you're looking for something a little more
-      opinionated, try remixing
-      <a href="https://glitch.com/edit/#!/remix/glitch-hello-website"
-        >~gitch-hello-website</a
-      >.test
-    </p>
-  </body>
+	<div class="timeline" id="timeline">
+		<div class="entry" style="height: 100px;">
+			<div class="times">
+				<time datetime="1621977642" class="start">9:20pm</time>
+				-
+				<time datetime="1621977742" class="end">9:22pm</time>
+			</div>
+
+			<h3>Name</h3>
+
+			<span class="duration">0:02:00</span>
+		</div>
+
+		<div class="entry" style="height: 200px;">
+			<div class="times">
+				<time datetime="1621977642" class="start">9:20pm</time>
+				-
+				<time datetime="1621977742" class="end">9:22pm</time>
+			</div>
+
+			<h3>Name 2</h3>
+
+			<span class="duration">0:02:00</span>
+		</div>
+	</div>
+
+	<div class="add-entry" id="add-entry">
+		<button class="new" id="new">+</button>
+	</div>
+
+	<div class="modal" id="modal">
+		<div class="modal-background" id="modal-background"></div>
+
+		<div class="modal-box">
+			<button class="modal-close" id="modal-close">&times;</button>
+
+			<div class="modal-inner">
+				<div class="modal-page modal-edit-raw" id="modal-edit-raw">
+					<h2>Edit data</h2>
+
+					<form action="">
+						<textarea name="json-data" cols="30" rows="10"></textarea>
+
+						<input type="submit" value="Update">
+					</form>
+				</div>
+
+				<div class="modal-page modal-export" id="modal-export">
+					<h2>Export</h2>
+					<div id="export-output"></div>
+				</div>
+
+				<div class="modal-page modal-connect" id="modal-connect">
+					<h2>Connect</h2>
+				</div>
+			</div><!-- .modal-inner -->
+		</div><!-- .modal-box -->
+	</div><!-- .modal -->
+
+	<template id="template-timeline-entry">
+		<div class="times">
+			<time datetime="1621977642" class="start">9:20pm</time>
+		</div>
+
+		<h3>Name</h3>
+
+		<span class="duration">0:02:00</span>
+	</template>
+
+	<script src="js/util.js"></script>
+	<script src="js/entries.js"></script>
+	<script src="js/ui.js"></script>
+	<script src="js/modal.js"></script>
+	<script src="js/main.js"></script>
+</body>
 </html>

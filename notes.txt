@@ -1,0 +1,28 @@
+Time Tracker
+
+https://codepen.io/JohnEvans/pen/KKWqVyQ
+
+Spec
+  Track start and end times
+  Quick way to start and stop
+  Qucik way to label task
+  Task presets for lunch, phone calls and breaks
+  Online sync
+
+Solution
+  Vertical, scrollable timeline
+  Wrapped list of previous entry names along bottom and plus button
+  Export options at top
+
+Data
+  [object] Entries
+    Entry (property name is start time as Unix timestamp)
+      [string] name (blank = untracked time)
+  [array] Index (ordered list of entry start times)
+    [int] start time (Unix timestamp)
+
+Saving
+  JSON strings
+  Local storage
+  Github
+    https://dev.to/rikurouvila/how-to-use-a-github-gist-as-a-free-database-20np
