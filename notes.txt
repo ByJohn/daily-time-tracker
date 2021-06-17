@@ -21,6 +21,9 @@ Data
   [array] Index (ordered list of entry start times)
     [int] start time (Unix timestamp)
 
+PWA
+  https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605
+
 Saving
   JSON strings
   Local storage
