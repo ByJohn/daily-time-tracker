@@ -1,0 +1,9 @@
+{
+  "name": "Daily Time Tracker",
+  "short_name": "Time Tracker",
+  "lang": "en-GB",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "white"
+}
