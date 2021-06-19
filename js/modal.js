@@ -58,17 +58,24 @@ var modal = {
 	},
 	displayExport: function () {
 		var text = '',
-				entryTotals = {};
+				entryTotals = {},
+        total = 0,
+        trackedTotal = 0;
 
 		text += '<h3>' + util.formatDate(ui.getDayDate()) + '</h3>';
 
 		entries.forEachInDay(ui.getDay(), function(id, entry) {
-			var name = entry.name !== '' ? entry.name : 'Untracked';
+			var name = entry.name !== '' ? entry.name : 'Untracked',
+          duration = entries.getDuration(id);
+
 			if (!entryTotals.hasOwnProperty(name)) {
 				entryTotals[name] = 0;
 			}
 
-			entryTotals[name] += entries.getDuration(id);
+			entryTotals[name] += duration;
+      total += duration;
+
+      if (entry.name) trackedTotal += duration;
 		});
 
 		for (var name in entryTotals) {
