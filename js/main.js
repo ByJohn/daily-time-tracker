@@ -8,8 +8,17 @@ function tick() {
 }
 
 
+//Service workers
+function registerServiceWorker() {
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw.js');
+  };
+}
+
+
 //Setup
 function init() {
+  registerServiceWorker();
 	entries.init();
 	ui.init();
 	modal.init();
