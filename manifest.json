@@ -35,7 +35,8 @@
     {
       "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-256.png?v=1624020555919",
       "sizes": "256x256",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable" 
     },
     {
       "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-512.png?v=1624020555919",
