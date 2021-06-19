@@ -78,6 +78,9 @@ var modal = {
       if (entry.name) trackedTotal += duration;
 		});
 
+    entryTotals['Tracked Total'] = trackedTotal;
+    entryTotals['Total'] = total;
+
 		for (var name in entryTotals) {
 			text += '<p><strong>' + name + '</strong>: ' + util.secondsToDuration(entryTotals[name]) + '</p>';
 		}
