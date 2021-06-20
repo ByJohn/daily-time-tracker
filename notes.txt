@@ -23,6 +23,7 @@ Data
 
 PWA
   https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605
+  https://developers.google.com/web/ilt/pwa/caching-files-with-service-worker
 
 Saving
   JSON strings
