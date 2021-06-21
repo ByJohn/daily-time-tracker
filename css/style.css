@@ -103,7 +103,6 @@ button {
 	flex: 1;
 	overflow-y: auto;
 	padding-top: 0;
-  background: red;
 }
 
 .entry {
@@ -174,12 +173,6 @@ button {
 .add-entry button.active,
 .entry.active{
 	box-shadow: 0 0 50px rgb(0 0 0 / 10%), inset 0 0 0 1px black;
-}
-
-
-textarea,
-pre {
-
 }
 
 input[type="text"],
