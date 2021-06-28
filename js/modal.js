@@ -68,7 +68,7 @@ var modal = {
 			var name = entry.name !== '' ? entry.name : 'Untracked',
           duration = entries.getDuration(id);
 
-			if (!entryTotals.hasOwnProperty(name)) {
+			if (!entryTotals.hasOwnProperty(name)) {w
 				entryTotals[name] = 0;
 			}
 
