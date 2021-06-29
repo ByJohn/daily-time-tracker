@@ -60,25 +60,32 @@ var modal = {
 		var text = '',
 				entryTotals = {},
         total = 0,
-        trackedTotal = 0;
+        trackedTotal = 0,
+        untrackedTotal = 0;
 
 		text += '<h3>' + util.formatDate(ui.getDayDate()) + '</h3>';
 
 		entries.forEachInDay(ui.getDay(), function(id, entry) {
-			var name = entry.name !== '' ? entry.name : 'Untracked',
+			var name = entry.name.trim(),
           duration = entries.getDuration(id);
 
-			if (!entryTotals.hasOwnProperty(name)) {
-				entryTotals[name] = 0;
-			}
+      if (name) {
+        if (!entryTotals.hasOwnProperty(name)) {
+          entryTotals[name] = 0;
+        }
 
-			entryTotals[name] += duration;
+        entryTotals[name] += duration;
+
+        trackedTotal += duration;
+      } else {
+        untrackedTotal += duration;
+      }
+
       total += duration;
-
-      if (entry.name) trackedTotal += duration;
 		});
 
     entryTotals['Tracked Total'] = trackedTotal;
+    entryTotals['Untracked Total'] = untrackedTotal;
     entryTotals['Total'] = total;
 
 		for (var name in entryTotals) {
