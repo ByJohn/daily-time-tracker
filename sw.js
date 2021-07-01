@@ -37,6 +37,7 @@ function fromCache(request) {
 }
 
 function update(request) {
+  console.log(self, request);
   return caches.open(cacheName).then(function (cache) {
     //TODO: Only cache files on the cache list
     return fetch(request).then(function (response) {
