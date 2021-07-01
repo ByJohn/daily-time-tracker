@@ -22,12 +22,18 @@ self.addEventListener('install', function(e) {
 
 //Serve cached content when offline
 self.addEventListener('fetch', function(e) {
-  e.respondWith(fromCache(e.request));
+  var file = e.request.url.replace(self.location.origin, ''); //URL after the domain part
 
-  e.waitUntil(
-    update(e.request)
-    .then(refresh)
-  );
+  if (filesToCache.includes(file)) {
+    e.respondWith(fromCache(e.request));
+    
+    e.waitUntil(
+      update(e.request)
+      .then(refresh)
+    );
+  } else {
+    e.respondWith(fetch(e.request));
+  }
 });
 
 function fromCache(request) {
@@ -37,9 +43,7 @@ function fromCache(request) {
 }
 
 function update(request) {
-  console.log(self, request);
   return caches.open(cacheName).then(function (cache) {
-    //TODO: Only cache files on the cache list
     return fetch(request).then(function (response) {
       return cache.put(request, response.clone()).then(function () {
         return response;
