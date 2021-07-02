@@ -4,6 +4,7 @@ function tick() {
 
 	if (activeID) {
 		ui.updateTimelineEntry(activeID);
+    ui.updateTitleElement(activeID);
 	}
 }
 

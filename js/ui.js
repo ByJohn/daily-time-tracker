@@ -1,5 +1,7 @@
 //UI
 var ui = {
+  $title: document.querySelector('head title'),
+  defaultTitle: '',
 	$edit: document.getElementById('edit-raw'),
 	$export: document.getElementById('export'),
 	$connect: document.getElementById('connect-data'),
@@ -13,6 +15,8 @@ var ui = {
 
 	init: function () {
 		this.setupEvents();
+
+    this.defaultTitle = this.$title.innerHTML;
 	},
 	setupEvents: function () {
 		this.$prevDay.addEventListener('click', this.previousDay.bind(this), false);
@@ -188,4 +192,14 @@ var ui = {
 
 		this.setDay(entries.getLatestDayId());
 	},
+  updateTitleElement: function (id) {
+		var entry = entries.get(id),
+        title = this.defaultTitle;
+
+    if (entry.name) {
+      title = entry.name + ' - ' + util.secondsToDuration(entries.getDuration(id));
+    }
+
+    this.$title.innerHTML = title;
+  },
 };
