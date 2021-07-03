@@ -41,9 +41,9 @@ var util = {
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    if (!minimumDisplay || hours < 10) {hours   = "0"+hours;}
-    if (!minimumDisplay || hours < 0 || minutes < 10) {minutes = "0"+minutes;}
-    if (!minimumDisplay || hours < 0 || minutes < 0 || seconds < 10) {seconds = "0"+seconds;}
+    if (!minimumDisplay && hours < 10) {hours   = "0"+hours;}
+    if ((!minimumDisplay || hours < 0 ) && minutes < 10) {minutes = "0"+minutes;}
+    if ((!minimumDisplay || hours < 0 || minutes < 0 ) && seconds < 10) {seconds = "0"+seconds;}
 
     var parts = [];
     if (!minimumDisplay || hours > 0) parts.push(hours);
