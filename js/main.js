@@ -30,3 +30,7 @@ function init() {
 }
 
 init();
+
+//Tests
+
+Util.seconds
