@@ -34,7 +34,8 @@ var util = {
 		return hours + ':' + minutes + suffix;
 	},
 	//See https://stackoverflow.com/a/6313008/528423
-	secondsToDuration: function (seconds) {
+	secondsToDuration: function (seconds, minimum) {
+    var minimum = typeof minimum !== 'undefined' ? minimum : false;
 		var sec_num = parseInt(seconds, 10);
     var hours   = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
