@@ -34,20 +34,20 @@ var util = {
 		return hours + ':' + minutes + suffix;
 	},
 	//See https://stackoverflow.com/a/6313008/528423
-	secondsToDuration: function (seconds, minimumDisplay) {
-    var minimumDisplay = typeof minimumDisplay !== 'undefined' ? minimumDisplay : false;
+	secondsToDuration: function (seconds, displayInFull) {
+    var displayInFull = typeof displayInFull !== 'undefined' ? displayInFull : true;
 		var sec_num = parseInt(seconds, 10);
     var hours   = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    if (!minimumDisplay && hours < 10) {hours   = "0"+hours;}
-    if ((!minimumDisplay || hours < 0 ) && minutes < 10) {minutes = "0"+minutes;}
-    if ((!minimumDisplay || hours < 0 || minutes < 0 ) && seconds < 10) {seconds = "0"+seconds;}
+    if (hours < 10 && displayInFull) {hours   = "0"+hours;}
+    if (minutes < 10 && (displayInFull || hours < 0 )) {minutes = "0"+minutes;}
+    if (seconds < 10 && (displayInFull || hours < 0 || minutes < 0 )) {seconds = "0"+seconds;}
 
     var parts = [];
-    if (!minimumDisplay || hours > 0) parts.push(hours);
-    if (!minimumDisplay || minutes > 0 || hours > 0) parts.push(minutes);
+    if (displayInFull || hours > 0) parts.push(hours);
+    if (displayInFull || minutes > 0 || hours > 0) parts.push(minutes);
     parts.push(seconds);
 
     return parts.join(':');
