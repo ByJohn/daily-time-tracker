@@ -197,7 +197,7 @@ var ui = {
         title = this.defaultTitle;
 
     if (entry.name) {
-      title = entry.name + ' - ' + util.secondsToDuration(entries.getDuration(id));
+      title = entry.name + ' - ' + util.secondsToDuration(entries.getDuration(id), true);
     }
 
     this.$title.innerHTML = title;

@@ -89,7 +89,7 @@ var modal = {
     entryTotals['Total'] = total;
 
 		for (var name in entryTotals) {
-			text += '<p><strong>' + name + '</strong>: ' + util.secondsToDuration(entryTotals[name]) + '</p>';
+			text += '<p><strong>' + name + '</strong>: ' + util.secondsToDuration(entryTotals[name], false) + '</p>';
 		}
 
 		this.$exportOutput.innerHTML = text;
