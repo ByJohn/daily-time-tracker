@@ -42,8 +42,8 @@ var util = {
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
     if (hours < 10 && displayInFull) {hours   = "0"+hours;}
-    if (minutes < 10 && (displayInFull || hours < 0 )) {minutes = "0"+minutes;}
-    if (seconds < 10 && (displayInFull || hours < 0 || minutes < 0 )) {seconds = "0"+seconds;}
+    if (minutes < 10 && (displayInFull || hours > 0 )) {minutes = "0"+minutes;}
+    if (seconds < 10 && (displayInFull || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
 
     var parts = [];
     if (displayInFull || hours > 0) parts.push(hours);
