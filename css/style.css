@@ -267,6 +267,10 @@ input[type="submit"] {
 	margin-top: 0;
 }
 
+.modal-export {
+  font-family: sans-serif;
+}
+
 .modal-edit-raw textarea {
 	height: 55vh;
 	max-height: calc(60vh - 5em);
