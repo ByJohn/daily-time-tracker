@@ -50,9 +50,9 @@ var util = {
     if (seconds < 10 && (displayInFull || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
 
     var parts = [];
-    if (displayInFull || hours > 0) parts.push(hours);
-    if (displayInFull || minutes > 0 || hours > 0) parts.push(minutes);
-    parts.push(seconds);
+    if (showHours === 2 || (showHours === 1 && hours > 0)) parts.push(hours);
+    if (showMinutes === 2 || (showMinutes === 1 && (minutes > 0 || hours > 0))) parts.push(minutes);
+    if (showSeconds === 2 || (showSeconds === 1 && (minutes > 0 || hours > 0))) parts.push(seconds);
 
     return parts.join(':');
 	},
