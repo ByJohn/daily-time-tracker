@@ -45,7 +45,8 @@ var util = {
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    if (hours < 10 && showHours !== 0) {hours   = "0"+hours;}
+    //HERE
+    if (hours < 10 && displayInFull) {hours   = "0"+hours;}
     if (minutes < 10 && (displayInFull || hours > 0 )) {minutes = "0"+minutes;}
     if (seconds < 10 && (displayInFull || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
 
