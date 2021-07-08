@@ -34,8 +34,7 @@ var util = {
 		return hours + ':' + minutes + suffix;
 	},
 	//See https://stackoverflow.com/a/6313008/528423
-	secondsToDuration: function (seconds, displayInFull, showSeconds, showMinutes, showHours) {
-    var displayInFull = typeof displayInFull !== 'undefined' ? displayInFull : true;
+	secondsToDuration: function (seconds, showSeconds, showMinutes, showHours) {
     var showSeconds = typeof showSeconds !== 'undefined' ? showSeconds : 2;
     var showMinutes = typeof showMinutes !== 'undefined' ? showMinutes : 2;
     var showHours = typeof showHours !== 'undefined' ? showHours : 2;
@@ -45,10 +44,9 @@ var util = {
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    //HERE
-    if (hours < 10 && displayInFull) {hours   = "0"+hours;}
-    if (minutes < 10 && (displayInFull || hours > 0 )) {minutes = "0"+minutes;}
-    if (seconds < 10 && (displayInFull || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
+    if (hours < 10 && showHours === 2) {hours = "0"+hours;}
+    if (minutes < 10 && (showMinutes === 2 || hours > 0 )) {minutes = "0"+minutes;}
+    if (seconds < 10 && (showSeconds === 2 || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
 
     var parts = [];
     if (showHours === 2 || (showHours === 1 && hours > 0)) parts.push(hours);
