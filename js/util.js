@@ -44,14 +44,18 @@ var util = {
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
+    var secondsShowing = showSeconds === 3 || showSeconds === 2 || (showSeconds === 1 && (seconds > 0 || minutes > 0 || hours > 0));
+    var minutesShowing = showMinutes === 3 || showMinutes === 2 || (showMinutes === 1 && (minutes > 0 || hours > 0));
+    var hoursShowing = showHours === 3 || showHours === 2 || (showHours === 1 && hours > 0);
+
     if (hours < 10 && showHours === 3) {hours = "0"+hours;}
-    if (minutes < 10 && (showMinutes === 3 || hours > 0 )) {minutes = "0"+minutes;}
-    if (seconds < 10 && (showSeconds === 3 || hours > 0 || minutes > 0 )) {seconds = "0"+seconds;}
+    if (minutes < 10 && (showMinutes === 3 || hoursShowing )) {minutes = "0"+minutes;}
+    if (seconds < 10 && (showSeconds === 3 || hoursShowing || minutesShowing )) {seconds = "0"+seconds;}
 
     var parts = [];
-    if (showHours === 3 || showHours === 2 || (showHours === 1 && hours > 0)) parts.push(hours);
-    if (showMinutes === 3 || showMinutes === 2 || (showMinutes === 1 && (minutes > 0 || hours > 0))) parts.push(minutes);
-    if (showSeconds === 3 || showSeconds === 2 || (showSeconds === 1 && (seconds > 0 || minutes > 0 || hours > 0))) parts.push(seconds);
+    if (hoursShowing) parts.push(hours);
+    if (minutesShowing) parts.push(minutes);
+    if (secondsShowing) parts.push(seconds);
 
     return parts.join(':');
 	},
