@@ -108,7 +108,9 @@ var ui = {
 
 		if (!entry.name) {
 			$entry.classList.add('entry-null');
-		}
+		} else {
+      $entry.style.backgroundColor = 'hsl(' + util.stringToHue(entry.name) + ', 100%, 99%';
+    }
 
 		if (id === entries.getIdActive()) {
 			$entry.classList.add('active');
@@ -157,7 +159,7 @@ var ui = {
       var $button = document.createElement('button');
       $button.appendChild(document.createTextNode(name));
       $button.dataset.name = name;
-      $button.style.backgroundColor = 'hsl(' +  + ', )'
+      $button.style.backgroundColor = 'hsl(' + util.stringToHue(name) + ', 100%, 99%';
 
       if (name == activeEntry.name) {
         $button.classList.add('active');
