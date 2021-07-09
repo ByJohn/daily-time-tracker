@@ -6,6 +6,19 @@ var util = {
 	sortNumericallyReverse: function (list) {
 		return list.sort(function (a, b) { return b - a; });
 	},
+  //See https://gist.github.com/0x263b/2bdd90886c2036a1ad5bcf06d6e6fb37
+  stringToHue: function(string) {
+      var hash = 0;
+
+      if (string.length === 0) return hash;
+
+      for (var i = 0; i < string.length; i++) {
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        hash = hash & hash;
+      }
+
+      return hash % 360;
+  },
 	secondsToDateObject: function (seconds) {
 		var time = new Date();
 

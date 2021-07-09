@@ -154,15 +154,16 @@ var ui = {
 
 		//Add buttons
 		entries.names.forEach(function (name) {
-				var $button = document.createElement('button');
-				$button.appendChild(document.createTextNode(name));
-				$button.dataset.name = name;
+      var $button = document.createElement('button');
+      $button.appendChild(document.createTextNode(name));
+      $button.dataset.name = name;
+      $button.style.backgroundColor = 'hsl(' +  + ', )'
 
-				if (name == activeEntry.name) {
-					$button.classList.add('active');
-				}
+      if (name == activeEntry.name) {
+        $button.classList.add('active');
+      }
 
-				that.$addEntry.append($button);
+      that.$addEntry.append($button);
 		});
 	},
 	addEntry: function (e) {
