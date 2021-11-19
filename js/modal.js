@@ -84,8 +84,8 @@ var modal = {
       total += duration;
 		});
 
-    entryTotals['Tracked Total'] = trackedTotal;
-    entryTotals['Untracked Total'] = untrackedTotal;
+    entryTotals['Named Tasks Total'] = trackedTotal;
+    entryTotals['Unnamed Tasks Total'] = untrackedTotal;
     entryTotals['Total'] = total;
 
 		for (var name in entryTotals) {

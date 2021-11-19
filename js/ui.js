@@ -120,7 +120,7 @@ var ui = {
 
 		var $start = $entry.querySelector('time.start'),
 				$name = $entry.querySelector('h3'),
-				name = entry.name ? entry.name : '(Untracked)';
+				name = entry.name ? entry.name : '(Unnamed Task)';
 
 		$start.innerHTML = util.secondsToTime(id);
 		$name.innerHTML = ''; //Empty the name element
