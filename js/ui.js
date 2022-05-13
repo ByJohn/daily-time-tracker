@@ -167,6 +167,8 @@ var ui = {
 
       that.$addEntry.append($button);
 		});
+
+    
 	},
 	addEntry: function (e) {
 		var name = '';
