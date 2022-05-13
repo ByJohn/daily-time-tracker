@@ -168,7 +168,7 @@ var ui = {
       that.$addEntry.append($button);
 		});
 
-    
+    this.$addEntry.scrollTo(0, 0); //Scroll to the top of the add-entry list
 	},
 	addEntry: function (e) {
 		var name = '';
