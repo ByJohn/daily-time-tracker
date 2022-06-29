@@ -21,6 +21,10 @@ Data
   [array] Index (ordered list of entry start times)
     [int] start time (Unix timestamp)
 
+Quick Edit
+  Name
+  Merge into previous
+
 PWA
   https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605
   https://developers.google.com/web/ilt/pwa/caching-files-with-service-worker
