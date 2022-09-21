@@ -23,11 +23,13 @@ Data
 
 Quick Edit
   Name
-  Change start
+  Adjust start
   Merge into previous
-  Merge
-  Move before
-  Move after
+  Merge inter next
+  Swap name with previous
+  Swap name with next
+  Swap time with previous
+  Swap time with next
 
 PWA
   https://medium.com/james-johnson/a-simple-progressive-web-app-tutorial-f9708e5f2605
