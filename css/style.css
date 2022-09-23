@@ -145,16 +145,36 @@ button {
 
 .entry-actions {
   display: none;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 1em;
+  padding: 0 1em;
+  background-color: rgba(255,255,255,0.9);
 }
 
 .entry:hover .entry-actions {
   display: flex;
+}
+
+.entry-action-group {
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.entry-action-group h5 {
+  margin: 0;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.entry-action-group button {
+  padding: 0.2em;
+  background-color: #444;
+  color: #fff;
 }
 
 .add-entry {
