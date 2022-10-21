@@ -104,6 +104,7 @@ var ui = {
 
 		$entry.classList.add('entry'); //Add a class
 		$entry.setAttribute('id', 'entry-' + id); //Give the entry an ID
+		$entry.setAttribute('data-id', id); //Give the entry an ID
 		$entry.innerHTML = this.entryTemplate; //Add the generic inner content
 
 		if (!entry.name) {
