@@ -19,6 +19,8 @@ var ui = {
     this.defaultTitle = this.$title.innerHTML;
 	},
 	setupEvents: function () {
+    var that = this;
+
 		this.$prevDay.addEventListener('click', this.previousDay.bind(this), false);
 		this.$nextDay.addEventListener('click', this.nextDay.bind(this), false);
 
@@ -26,6 +28,8 @@ var ui = {
 		document.addEventListener('entries.reindex', this.refreshDay.bind(this), false);
 
 		this.$addEntry.addEventListener('click', this.addEntry.bind(this), false);
+
+		this.$timeline.addEventListener('click', this.maybeEntryActionClicked.bind(this), false);
 	},
 	getDay: function () {
 		return this.currentDay;
@@ -207,5 +211,13 @@ var ui = {
     }
 
     this.$title.innerHTML = title;
+  },
+  maybeEntryActionClicked: function (e) {
+    if (!e.target || e.target.tagName.toLowerCase() !== 'button') {
+			return false;
+		}
+    
+		if (typeof e.target.dataset.name !== 'undefined') {
+    
   },
 };
