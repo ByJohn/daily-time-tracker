@@ -213,11 +213,10 @@ var ui = {
     this.$title.innerHTML = title;
   },
   maybeEntryActionClicked: function (e) {
-    if (!e.target || e.target.tagName.toLowerCase() !== 'button') {
-			return false;
-		}
-    
-		if (typeof e.target.dataset.name !== 'undefined') {
-    
+    if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
+
+    var action = e.target.dataset.entryAction;
+
+    console.log(action);
   },
 };
