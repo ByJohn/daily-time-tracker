@@ -202,6 +202,13 @@ var ui = {
 
 		this.setDay(entries.getLatestDayId());
 	},
+  maybeEntryActionClicked: function (e) {
+    if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
+
+    var action = e.target.dataset.entryAction;
+
+    switch
+  },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
         title = this.defaultTitle;
@@ -211,12 +218,5 @@ var ui = {
     }
 
     this.$title.innerHTML = title;
-  },
-  maybeEntryActionClicked: function (e) {
-    if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
-
-    var action = e.target.dataset.entryAction;
-
-    console.log(action);
   },
 };
