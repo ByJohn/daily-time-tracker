@@ -187,7 +187,7 @@ var entries = {
 		this.reindex();
 		this.save();
 	},
-	update: function (id) {
+	update: function (id, entry) {
 		//TODO
 		this.reindex();
 	},

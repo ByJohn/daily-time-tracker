@@ -205,10 +205,23 @@ var ui = {
   maybeEntryActionClicked: function (e) {
     if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
 
-    this.processEntryAction( e.target.dataset.entryAction,  );
+    this.processEntryAction( e.target.dataset.entryAction, e.target.closest('.entry').dataset.id );
   },
   processEntryAction: function (action, id) {
+		var entry = entries.get(id);
+    
+    if ( ! entry ) return;
+
     action = action.split(':');
+
+    switch ( action[0] ) {
+      case 'rename' :
+			  var newName = window.prompt('Set new name', entry.name);
+
+        if (newName != entry.name)
+
+        break;
+    }
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
