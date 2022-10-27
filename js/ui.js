@@ -218,7 +218,11 @@ var ui = {
       case 'rename' :
 			  var newName = window.prompt('Set new name', entry.name);
 
-        if (newName != entry.name)
+        if (newName !== null && newName != entry.name) {
+          entry.name = newName;
+
+          entries.update(id, entry);
+        }
 
         break;
     }

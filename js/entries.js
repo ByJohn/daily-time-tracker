@@ -187,8 +187,10 @@ var entries = {
 		this.reindex();
 		this.save();
 	},
-	update: function (id, entry) {
-		//TODO
+	update: function (id, data) {
+		this.entries[id] = data;
+
+		this.save();
 		this.reindex();
 	},
 	changeStart: function (id) {
