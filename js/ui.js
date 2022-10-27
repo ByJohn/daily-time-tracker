@@ -205,9 +205,10 @@ var ui = {
   maybeEntryActionClicked: function (e) {
     if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
 
-    var action = e.target.dataset.entryAction;
-
-    switch
+    this.processEntryAction( e.target.dataset.entryAction,  );
+  },
+  processEntryAction: function (action, id) {
+    action = action.split(':');
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
