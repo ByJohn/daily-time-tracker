@@ -1,6 +1,7 @@
 //Datastore
 var entries = {
 	entries: {},
+  backups: [], //Will hold an array of history entries changes
 	indexes: [], //Will hold an ordered list of the enrty times
 	days: [], //Will hold a nested array of entry IDs, grouped by day
 	names: [], //Will hold all of the unique entry names, most recent first
