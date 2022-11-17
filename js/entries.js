@@ -93,6 +93,15 @@ var entries = {
 
 		document.dispatchEvent(new Event('entries.reindex'));
 	},
+  hasBackup: function () {
+    return this.backups.length > 0;
+  },
+  backup: function (entries) {
+    this.backups.push(Object.assign({}, entries)); //Adds the value (not reference) of the entries object to the backups array
+  },
+  restore: function () {
+    return this.backups.pop();
+  },
 	getAll: function () {
 		return this.entries;
 	},
