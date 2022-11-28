@@ -24,6 +24,7 @@ var ui = {
 		this.$prevDay.addEventListener('click', this.previousDay.bind(this), false);
 		this.$nextDay.addEventListener('click', this.nextDay.bind(this), false);
 
+    document.addEventListener('entries.reindex', this.updateUndoButton.bind(this), false);
 		document.addEventListener('entries.reindex', this.updateAddList.bind(this), false);
 		document.addEventListener('entries.reindex', this.refreshDay.bind(this), false);
 
@@ -147,6 +148,7 @@ var ui = {
 
 		$duration.innerHTML = util.secondsToDuration(duration);
 	},
+  updateUndoButton: function() {},
 	updateAddList: function () {
 		var that = this,
 			activeEntry = entries.getActive(),
