@@ -99,10 +99,14 @@ var entries = {
   saveBackup: function (entries) {
     this.backups.push(Object.assign({}, entries)); //Adds the value (not reference) of the entries object to the backups array
 
-    //TODO: Limit backup count
+    var limit = 5;
+
+    if (this.backups.length > limit) {
+      this.backups.splice(0, this.backup.length - limit);
+    }
   },
   getRestore: function () {
-    return this.backups.pop();
+    return this.backups.pop(); //Remove element from the end
   },
 	getAll: function () {
 		return this.entries;
