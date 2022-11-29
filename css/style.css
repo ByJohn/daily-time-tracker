@@ -80,6 +80,11 @@ button.undo {
   flex: 0;
 }
 
+button.undo[disabled] {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
 .date-selector {
 	display: flex;
 	align-items: center;

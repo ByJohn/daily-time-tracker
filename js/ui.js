@@ -5,6 +5,7 @@ var ui = {
 	$edit: document.getElementById('edit-raw'),
 	$export: document.getElementById('export'),
 	$connect: document.getElementById('connect-data'),
+	$undo: document.getElementById('undo'),
 	currentDay: null, //Use this.getDay() to access
 	$currentDate: document.getElementById('current-date'),
 	$prevDay: document.getElementById('prev-day'),
@@ -148,7 +149,9 @@ var ui = {
 
 		$duration.innerHTML = util.secondsToDuration(duration);
 	},
-  updateUndoButton: function() {},
+  updateUndoButton: function() {
+    this.$undo.toggleAttribute('disabled', !entries.hasBackup());
+  },
 	updateAddList: function () {
 		var that = this,
 			activeEntry = entries.getActive(),
