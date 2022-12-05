@@ -108,6 +108,9 @@ var entries = {
   getRestore: function () {
     return this.backups.pop(); //Remove element from the end
   },
+  restoreBackup: function () {
+    
+  },
 	getAll: function () {
 		return this.entries;
 	},

@@ -22,6 +22,8 @@ var ui = {
 	setupEvents: function () {
     var that = this;
 
+		this.$undo.addEventListener('click', this.undo.bind(this), false);
+
 		this.$prevDay.addEventListener('click', this.previousDay.bind(this), false);
 		this.$nextDay.addEventListener('click', this.nextDay.bind(this), false);
 
@@ -33,6 +35,12 @@ var ui = {
 
 		this.$timeline.addEventListener('click', this.maybeEntryActionClicked.bind(this), false);
 	},
+  updateUndoButton: function() {
+    this.$undo.toggleAttribute('disabled', !entries.hasBackup());
+  },
+  undo: function () {
+    entries.restoreBackup();
+  },
 	getDay: function () {
 		return this.currentDay;
 	},
