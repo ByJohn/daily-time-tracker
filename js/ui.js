@@ -149,9 +149,6 @@ var ui = {
 
 		$duration.innerHTML = util.secondsToDuration(duration);
 	},
-  updateUndoButton: function() {
-    this.$undo.toggleAttribute('disabled', !entries.hasBackup());
-  },
 	updateAddList: function () {
 		var that = this,
 			activeEntry = entries.getActive(),
