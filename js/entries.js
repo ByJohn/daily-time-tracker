@@ -197,6 +197,8 @@ var entries = {
 		return next - id;
 	},
 	add: function (name) {
+    this.saveBackup(this.entries);
+
 		var id = Math.round(new Date().getTime() / 1000),
 			data = {
 				name: name,
@@ -207,6 +209,8 @@ var entries = {
 		this.save();
 	},
 	update: function (id, data) {
+    this.saveBackup(this.entries);
+
 		this.entries[id] = data;
 
 		this.save();
@@ -214,10 +218,14 @@ var entries = {
 	},
 	changeStart: function (id) {
 		//TODO
+    this.saveBackup(this.entries);
+		this.save();
 		this.reindex();
 	},
 	remove: function (id) {
 		//TODO
+		this.saveBackup(this.entries);
+		this.save();
 		this.reindex();
 	},
 };
