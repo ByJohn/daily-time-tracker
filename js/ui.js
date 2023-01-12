@@ -225,6 +225,10 @@ var ui = {
     action = action.split(':');
 
     switch ( action[0] ) {
+      case 'start' :
+        this.editEntryStart(id, action[1]);
+        break;
+
       case 'rename' :
 			  var newName = window.prompt('Set new name', entry.name);
 
@@ -236,6 +240,18 @@ var ui = {
 
         break;
     }
+  },
+  editEntryStart: function (id, action) {
+    var text = action + ' start',
+        value = '';
+
+    if (action == 'decrease') {
+    } else if (action == 'edit') {
+      value = id;
+    } else if (action == 'incease') {
+    }
+
+    var newValue = window.prompt(text, value);
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
