@@ -50,7 +50,7 @@ button {
 }
 
 .actions button,
-.actions button:focus{
+.actions button:focus {
 	flex: 1;
 	padding: 0.3em 0.5em;
 	border-radius: 0;
@@ -76,7 +76,8 @@ button {
 	opacity: 1;
 }
 
-button.undo {
+button.undo,
+button.undo:focus {
   flex: 0;
 }
 

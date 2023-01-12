@@ -102,14 +102,23 @@ var entries = {
     var limit = 5;
 
     if (this.backups.length > limit) {
-      this.backups.splice(0, this.backup.length - limit); //Remove extra elements from the start of the backups array
+      this.backups.splice(0, this.backups.length - limit); //Remove extra elements from the start of the backups array
     }
   },
   getRestore: function () {
     return this.backups.pop(); //Remove element from the end
   },
   restoreBackup: function () {
+    var restore = this.getRestore();
+
+    if (typeof restore === 'undefined') return false;
     
+    this.entries = restore;
+
+    this.save();
+		this.reindex();
+
+    return true;
   },
 	getAll: function () {
 		return this.entries;
