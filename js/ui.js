@@ -243,15 +243,41 @@ var ui = {
   },
   editEntryStart: function (id, action) {
     var text = action + ' start',
-        value = '';
+        value = '',
+        prevId = entries.getIdBefore(id),
+        nextId = entries.getIdAfter(id),
+        min = Infinity,
+        max = Infinity;
 
     if (action == 'decrease') {
+      min = 1;
+
+      if (prevId) {
+        max = id - prevId - 1;
+      }
     } else if (action == 'edit') {
       value = id;
+
+      if (prevId) {
+        min = prevId + 1;
+      }
+
+      if (nextId) {
+        max = nextId - 1;
+      }
     } else if (action == 'incease') {
+      min = 1;
+
+      if (nextId) {
+        max = nextId - id - 1;
+      }
     }
+    
+    text += ' (' + min + '-' + max + ')';
 
     var newValue = window.prompt(text, value);
+
+    alert('TODO', newValue);
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
