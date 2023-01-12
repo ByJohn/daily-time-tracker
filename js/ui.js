@@ -243,7 +243,7 @@ var ui = {
   },
   editEntryStart: function (id, action) {
     var text = action + ' start',
-        value = '',
+        value = 0,
         prevId = entries.getIdBefore(id),
         nextId = entries.getIdAfter(id),
         min = Infinity,
@@ -265,7 +265,7 @@ var ui = {
       if (nextId) {
         max = nextId - 1;
       }
-    } else if (action == 'incease') {
+    } else if (action == 'increase') {
       min = 1;
 
       if (nextId) {
@@ -273,11 +273,15 @@ var ui = {
       }
     }
     
-    text += ' (' + min + '-' + max + ')';
+    text += ' (' + min + ' - ' + max + ')';
+    text = text.replace(/Infinity/g, '∞');
 
     var newValue = window.prompt(text, value);
 
-    alert('TODO', newValue);
+    if (newValue === '' || newValue === null || newValue == value) return;
+
+    //TODO
+    console.log('TODO', newValue);
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
