@@ -287,10 +287,12 @@ var ui = {
       return;
     }
 
-    var newID = newValue;
+    var newId = newValue;
 
     if (action == 'decrease') {
-      newId =
+      newId = id - newValue;
+    } else if (action == 'increase') {
+      newId = id + newValue;
     }
 
     entries.updateId(id, newId);

@@ -227,5 +227,6 @@ var entries = {
 	},
   updateId: function (oldId, newId) {
     //TODO
+    console.log('updateId', oldId, newId);
   },
 };
