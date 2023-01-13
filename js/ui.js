@@ -282,7 +282,7 @@ var ui = {
 
     var newValue = window.prompt(text, value);
 
-    if (newValue === null || newValue.trim() === '' || isNaN(newValue) || newValue == value) return;
+    if (newValue === null || newValue.trim() === '' || isNaN(newValue) || (action == 'edit' && newValue == value)) return;
 
     newValue = parseInt(newValue);
 
