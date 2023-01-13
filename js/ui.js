@@ -233,9 +233,11 @@ var ui = {
 			  var newName = window.prompt('Set new name', entry.name);
 
         if (newName !== null && newName != entry.name) {
-          entry.name = newName;
+          var newEntry = {
+            name: newName,
+          };
 
-          entries.update(id, entry);
+          entries.update(id, newEntry);
         }
 
         break;
@@ -246,7 +248,7 @@ var ui = {
         value = 0,
         prevId = entries.getIdBefore(id),
         nextId = entries.getIdAfter(id),
-        min = Infinity,
+        min = -Infinity,
         max = Infinity;
 
     if (action == 'decrease') {
@@ -280,8 +282,18 @@ var ui = {
 
     if (newValue === '' || newValue === null || newValue == value) return;
 
-    //TODO
-    console.log('TODO', newValue);
+    if (newValue < min || newValue > max) {
+      alert('Error: Value outside of parameters.');
+      return;
+    }
+
+    var newID = newValue;
+
+    if (action == 'decrease') {
+      newId =
+    }
+
+    entries.updateId(id, newId);
   },
   updateTitleElement: function (id) {
 		var entry = entries.get(id),
