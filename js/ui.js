@@ -245,33 +245,35 @@ var ui = {
   },
   editEntryStart: function (id, action) {
     var text = action + ' start',
-        value = 0,
+        value = 1,
         prevId = entries.getIdBefore(id),
         nextId = entries.getIdAfter(id),
         min = -Infinity,
         max = Infinity;
 
+    id = parseInt(id);
+
     if (action == 'decrease') {
       min = 1;
 
       if (prevId) {
-        max = id - prevId - 1;
+        max = id - parseInt(prevId) - 1;
       }
     } else if (action == 'edit') {
       value = id;
 
       if (prevId) {
-        min = prevId + 1;
+        min = parseInt(prevId) + 1;
       }
 
       if (nextId) {
-        max = nextId - 1;
+        max = parseInt(nextId) - 1;
       }
     } else if (action == 'increase') {
       min = 1;
 
       if (nextId) {
-        max = nextId - id - 1;
+        max = parseInt(nextId) - id - 1;
       }
     }
     
@@ -280,7 +282,9 @@ var ui = {
 
     var newValue = window.prompt(text, value);
 
-    if (newValue === '' || newValue === null || newValue == value) return;
+    if (newValue === null || newValue.trim() === '' || isNaN(newValue) || newValue == value) return;
+
+    newValue = parseInt(newValue);
 
     if (newValue < min || newValue > max) {
       alert('Error: Value outside of parameters.');
