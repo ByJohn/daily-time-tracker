@@ -97,7 +97,9 @@ var entries = {
     return this.backups.length > 0;
   },
   saveBackup: function (entries) {
+    console.log(entries);
     this.backups.push(Object.assign({}, entries)); //Adds the value (not reference) of the entries object to the backups array
+    console.log(entries, this.backups[this.backups.length - 1]);
 
     var limit = 5;
 
