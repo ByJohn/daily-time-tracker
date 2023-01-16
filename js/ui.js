@@ -244,14 +244,14 @@ var ui = {
     }
   },
   editEntryStart: function (id, action) {
+    id = parseInt(id);
+
     var text = action + ' start',
         value = 1,
         prevId = entries.getIdBefore(id),
         nextId = entries.getIdAfter(id),
         min = -Infinity,
         max = Infinity;
-
-    id = parseInt(id);
 
     if (action == 'decrease') {
       min = 1;
