@@ -231,6 +231,16 @@ var entries = {
 
     this.saveBackup(this.entries);
 
+    /*
+    Create new, empty object
+    For each entry ID
+      If current ID is greater than newId
+        Insert entry into new object
+      If not oldId
+        Insert entry into new object
+    */
+
+    /*
     var keys = Object.keys(this.entries);
     var newObj = keys.reduce(function (acc, val) {
       if(val === oldId){
@@ -241,6 +251,7 @@ var entries = {
 
       return acc;
     }, {});
+    */
 
     //TODO: Ensure IDs are ordered correctly
 
