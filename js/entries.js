@@ -227,35 +227,33 @@ var entries = {
 	},
   //Based on https://stackoverflow.com/a/48110891
   updateId: function (oldId, newId) {
-    if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId == newId) return;
+    if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId === newId) return;
 
     this.saveBackup(this.entries);
 
+    //New entry is inserted and entire list is ordered ascending
+    var that = this,
+        entries = {};
+
+    this.forEach(function (id) {
+      if (id > newId) {
+        entries[newId] = that.entries[oldId];
+      }
+
+      if (id !== oldId) {
+        entries[id] = that.entries[id];
+      }
+    });
     /*
     Create new, empty object
     For each entry ID
-      If current ID is greater than newId
-        Insert entry into new object
+      If is greater than newId
+        Insert newId entry into new object
       If not oldId
         Insert entry into new object
     */
 
-    /*
-    var keys = Object.keys(this.entries);
-    var newObj = keys.reduce(function (acc, val) {
-      if(val === oldId){
-        acc[newId] = this.entries[oldId];
-      } else {
-        acc[val] = this.entries[val];
-      }
-
-      return acc;
-    }, {});
-    */
-
-    //TODO: Ensure IDs are ordered correctly
-
-    this.entries = newObj;
+    this.entries = entries;
 
     this.save();
     this.reindex();
