@@ -225,8 +225,28 @@ var entries = {
 		this.save();
 		this.reindex();
 	},
+  //Based on https://stackoverflow.com/a/48110891
   updateId: function (oldId, newId) {
-    //TODO
-    console.log('updateId', oldId, newId);
+    if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId == newId) return;
+
+    this.saveBackup(this.entries);
+
+    var keys = Object.keys(this.entries);
+    var newObj = keys.reduce(function (acc, val) {
+      if(val === oldId){
+        acc[newId] = this.entries[oldId];
+      } else {
+        acc[val] = this.entries[val];
+      }
+
+      return acc;
+    }, {});
+
+    //TODO: Ensure IDs are ordered correctly
+
+    this.entries = newObj;
+
+    this.save();
+    this.reindex();
   },
 };
