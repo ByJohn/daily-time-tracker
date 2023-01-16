@@ -268,9 +268,12 @@ var ui = {
 
       if (nextId) {
         max = parseInt(nextId) - 1;
+      } else {
+        max = Math.round(new Date().getTime() / 1000);
       }
     } else if (action == 'increase') {
       min = 1;
+      max = Math.round(new Date().getTime() / 1000) - id - 1;
 
       if (nextId) {
         max = parseInt(nextId) - id - 1;
