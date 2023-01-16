@@ -56,7 +56,7 @@ var entries = {
 		var that = this;
 
 		//Set up the indexes
-		this.indexes = util.sortNumerically(Object.keys(this.entries));
+		this.indexes = util.sortNumerically(Object.keys(this.entries).map(function (id) {return parseInt(id);}));
 		
 		//Set up the days
 		this.days = [];
@@ -231,10 +231,10 @@ var entries = {
 
     this.saveBackup(this.entries);
 
-    //New entry is inserted and entire list is ordered ascending
     var that = this,
         entries = {};
 
+    //New entry is inserted and entire entries list is ordered ascending
     this.forEach(function (id) {
       if (id > newId) {
         entries[newId] = that.entries[oldId];
@@ -244,14 +244,6 @@ var entries = {
         entries[id] = that.entries[id];
       }
     });
-    /*
-    Create new, empty object
-    For each entry ID
-      If is greater than newId
-        Insert newId entry into new object
-      If not oldId
-        Insert entry into new object
-    */
 
     this.entries = entries;
 
