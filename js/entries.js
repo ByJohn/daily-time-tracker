@@ -133,7 +133,7 @@ var entries = {
 	getIdBefore: function (id) {
 		var index = this.indexes.indexOf(parseInt(id));
 
-		if (index > -1 && this.indexes[index - 1]) {
+		if (index > -1 && typeof this.indexes[index - 1] !== 'undefined') {
 			return this.indexes[index - 1];
 		}
 
@@ -142,7 +142,7 @@ var entries = {
 	getIdAfter: function (id) {
 		var index = this.indexes.indexOf(parseInt(id));
 
-		if (index > -1 && this.indexes[index + 1]) {
+		if (index > -1 && typeof this.indexes[index + 1] !== 'undefined') {
 			return this.indexes[index + 1];
 		}
 

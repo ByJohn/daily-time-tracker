@@ -256,17 +256,17 @@ var ui = {
     if (action == 'decrease') {
       min = 1;
 
-      if (prevId) {
+      if (prevId !== null) {
         max = id - parseInt(prevId) - 1;
       }
     } else if (action == 'edit') {
       value = id;
 
-      if (prevId) {
+      if (prevId !== null) {
         min = parseInt(prevId) + 1;
       }
 
-      if (nextId) {
+      if (nextId !== null) {
         max = parseInt(nextId) - 1;
       } else {
         max = Math.round(new Date().getTime() / 1000);
@@ -275,7 +275,7 @@ var ui = {
       min = 1;
       max = Math.round(new Date().getTime() / 1000) - id - 1;
 
-      if (nextId) {
+      if (nextId !== null) {
         max = parseInt(nextId) - id - 1;
       }
     }
