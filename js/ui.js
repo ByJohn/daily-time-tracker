@@ -279,6 +279,8 @@ var ui = {
         max = parseInt(nextId) - id - 1;
       }
     }
+
+    min = 
     
     text += ' (' + min + ' - ' + max + ')';
     text = text.replace(/Infinity/g, '∞');

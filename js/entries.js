@@ -229,10 +229,14 @@ var entries = {
   updateId: function (oldId, newId) {
     if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId === newId) return;
 
+    console.log(oldId, newId);
+
     this.saveBackup(this.entries);
 
     var that = this,
         entries = {};
+
+    //HERE: Not working for newest entry
 
     //New entry is inserted and entire entries list is ordered ascending
     this.forEach(function (id) {
