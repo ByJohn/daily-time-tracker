@@ -240,10 +240,12 @@ var entries = {
 
     //New entry is inserted and entire entries list is ordered ascending
     this.forEach(function (id) {
+      //If the current ID is greater than the new ID
       if (id > newId) {
-        entries[newId] = that.entries[oldId];
+        entries[newId] = that.entries[oldId]; //Quickly insert the new ID before the current ID
       }
 
+      //If the current ID is not the old ID (process all IDs except the old ID)
       if (id !== oldId) {
         entries[id] = that.entries[id];
       }

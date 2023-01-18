@@ -280,19 +280,26 @@ var ui = {
       }
     }
 
-    min = 
+    if (min > max) {
+      min = max;
+    }
     
     text += ' (' + min + ' - ' + max + ')';
     text = text.replace(/Infinity/g, '∞');
 
     var newValue = window.prompt(text, value);
 
-    if (newValue === null || newValue.trim() === '' || isNaN(newValue) || (action == 'edit' && newValue == value)) return;
+    if (newValue === null || newValue.trim() === '' || (action == 'edit' && newValue == value)) return;
+    
+    if (isNaN(newValue)) {
+      alert('Error: "' + newValue + '" is invalid.');
+      return;
+    }
 
     newValue = parseInt(newValue);
 
     if (newValue < min || newValue > max) {
-      alert('Error: Value outside of parameters.');
+      alert('Error: ' + newValue + ' is not between ' + min + ' - ' + max + '.');
       return;
     }
 
