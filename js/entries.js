@@ -225,7 +225,10 @@ var entries = {
 		this.save();
 		this.reindex();
 	},
-  //Based on https://stackoverflow.com/a/48110891
+  /**
+   * Changes an entry ID and maintains accending order.
+   * If newId already exists, its data will be overridden.
+   */
   updateId: function (oldId, newId) {
     if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId === newId) return;
 
