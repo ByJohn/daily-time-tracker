@@ -212,6 +212,16 @@ var ui = {
 
 		this.setDay(entries.getLatestDayId());
 	},
+  updateTitleElement: function (id) {
+		var entry = entries.get(id),
+        title = this.defaultTitle;
+
+    if (entry.name) {
+      title = util.secondsToDuration(entries.getDuration(id), 1, 1, 1) + ' - ' + entry.name;
+    }
+
+    this.$title.innerHTML = title;
+  },
   maybeEntryActionClicked: function (e) {
     if (!e.target || e.target.tagName.toLowerCase() !== 'button' || typeof e.target.dataset.entryAction === 'undefined') return;
 
