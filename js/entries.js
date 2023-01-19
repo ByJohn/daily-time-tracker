@@ -232,20 +232,18 @@ var entries = {
   updateId: function (oldId, newId) {
     if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId === newId) return;
 
-    console.log(oldId, newId);
-
     this.saveBackup(this.entries);
 
     var that = this,
-        entries = {};
-
-    //HERE: Not working for newest entry
+        entries = {},
+        addedNewEntry = false;
 
     //New entry is inserted and entire entries list is ordered ascending
     this.forEach(function (id) {
       //If the current ID is greater than the new ID
       if (id > newId) {
         entries[newId] = that.entries[oldId]; //Quickly insert the new ID before the current ID
+        addedNewEntry = true;
       }
 
       //If the current ID is not the old ID (process all IDs except the old ID)
@@ -253,6 +251,10 @@ var entries = {
         entries[id] = that.entries[id];
       }
     });
+
+    if (!addedNewEntry) {
+      entries[newId] = that.entries[oldId]; //Insert the new ID at the end as it must have been greater than all other IDs
+    }
 
     this.entries = entries;
 

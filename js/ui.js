@@ -241,6 +241,10 @@ var ui = {
         }
 
         break;
+
+      case 'swap-name' :
+        this.swapEntryName(id, action[1]);
+        break;
     }
   },
   editEntryStart: function (id, action) {
@@ -313,14 +317,7 @@ var ui = {
 
     entries.updateId(id, newId);
   },
-  updateTitleElement: function (id) {
-		var entry = entries.get(id),
-        title = this.defaultTitle;
-
-    if (entry.name) {
-      title = util.secondsToDuration(entries.getDuration(id), 1, 1, 1) + ' - ' + entry.name;
-    }
-
-    this.$title.innerHTML = title;
+  swapEntryName: function(id, direction) {
+    console.log('swap', id, direction);
   },
 };
