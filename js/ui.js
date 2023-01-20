@@ -334,13 +334,15 @@ var ui = {
     if (direction == 'prev') otherId = entries.getIdBefore(id);
     else otherId = entries.getIdAfter(id);
 
-    var otherName = otherEntry ? otherEntry.name : '',
-        otherEntry = null;
+    var otherEntry = entries.get(otherId),
+        otherName = otherEntry ? otherEntry.name : '';
 
     if (!entry || entry.name === otherName) return;
 
+    //TODO: Only backup once before both changes
+
     if (otherEntry) {
-      entries.update(id, {name: otherName});
+      entries.update(otherId, {name: entry.name});
     }
 
     entries.update(id, {name: otherName});
