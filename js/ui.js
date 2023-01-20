@@ -328,10 +328,21 @@ var ui = {
     entries.updateId(id, newId);
   },
   swapEntryName: function(id, direction) {
-    var otherId = null;
+    var entry = entries.get(id),
+        otherId = null;
 
-    if (direction == 'prev')
-    otherId = entries.getIdBefore(id);
-    otherId = entries.getIdAfter(id);
+    if (direction == 'prev') otherId = entries.getIdBefore(id);
+    else otherId = entries.getIdAfter(id);
+
+    var otherName = otherEntry ? otherEntry.name : '',
+        otherEntry = null;
+
+    if (!entry || entry.name === otherName) return;
+
+    if (otherEntry) {
+      entries.update(id, {name: otherName});
+    }
+
+    entries.update(id, {name: otherName});
   },
 };
