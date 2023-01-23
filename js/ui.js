@@ -339,7 +339,7 @@ var ui = {
 
     if (!entry || entry.name === otherName) return;
 
-    //TODO: Only backup once before both changes
+    //TODO: entries.update() function to support first argument as multiple entries object
 
     if (otherEntry) {
       entries.update(otherId, {name: entry.name});
