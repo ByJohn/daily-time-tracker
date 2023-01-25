@@ -243,11 +243,13 @@ var ui = {
 			  var newName = window.prompt('Set new name', entry.name);
 
         if (newName !== null && newName != entry.name) {
-          var newEntry = {
+          var entryData = {};
+
+          entryData[id] = {
             name: newName,
           };
 
-          entries.update(id, newEntry);
+          entries.update(entryData);
         }
 
         break;
@@ -334,17 +336,21 @@ var ui = {
     if (direction == 'prev') otherId = entries.getIdBefore(id);
     else otherId = entries.getIdAfter(id);
 
+    if (otherId === null) return;
+
     var otherEntry = entries.get(otherId),
         otherName = otherEntry ? otherEntry.name : '';
 
     if (!entry || entry.name === otherName) return;
 
-    //TODO: entries.update() function to support first argument as multiple entries object
+    var entryData = {};
 
     if (otherEntry) {
-      entries.update(otherId, {name: entry.name});
+      entryData[otherId] = {name: entry.name};
     }
 
-    entries.update(id, {name: otherName});
+    entryData[id] = {name: otherName};
+
+    entries.update(entryData);
   },
 };

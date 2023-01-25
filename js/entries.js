@@ -217,10 +217,15 @@ var entries = {
 		this.reindex();
 		this.save();
 	},
-	update: function (id, data) {
+	update: function (entryData) {
+    //TODO: Only backup if entryData is valid
     this.saveBackup(this.entries);
 
-		this.entries[id] = data;
+    for (const id in entryData) {
+      if (! this.get(id)) continue;
+
+		  this.entries[id] = entryData[id];
+    }
 
 		this.save();
 		this.reindex();
