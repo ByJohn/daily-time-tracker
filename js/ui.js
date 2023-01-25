@@ -336,20 +336,16 @@ var ui = {
     if (direction == 'prev') otherId = entries.getIdBefore(id);
     else otherId = entries.getIdAfter(id);
 
-    if (otherId === null) return;
+    if (!entry || otherId === null) return;
 
-    var otherEntry = entries.get(otherId),
-        otherName = otherEntry ? otherEntry.name : '';
+    var otherEntry = entries.get(otherId);
 
-    if (!entry || entry.name === otherName) return;
+    if (entry.name === otherEntry.name) return;
 
     var entryData = {};
 
-    if (otherEntry) {
-      entryData[otherId] = {name: entry.name};
-    }
-
-    entryData[id] = {name: otherName};
+    entryData[id] = {name: otherEntry.name};
+    entryData[otherId] = {name: entry.name};
 
     entries.update(entryData);
   },
