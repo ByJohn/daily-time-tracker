@@ -254,6 +254,10 @@ var ui = {
 
         break;
 
+      case 'merge' :
+        this.mergeEntry(id, action[1]);
+        break;
+
       case 'swap-name' :
         this.swapEntryName(id, action[1]);
         break;
@@ -328,6 +332,11 @@ var ui = {
     }
 
     entries.updateId(id, newId);
+  },
+  mergeEntry: function(id, direction) {
+    var entry = entries.get(id);
+
+    //TODO
   },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
