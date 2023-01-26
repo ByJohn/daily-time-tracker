@@ -334,22 +334,33 @@ var ui = {
     entries.updateId(id, newId);
   },
   mergeEntry: function(id, direction) {
-    var entry = entries.get(id);
+    var entry = entries.get(id),
+        otherId = direction == 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
+        otherEntry = entries.get(otherId);
 
-    //TODO
+    console.log(entry, otherEntry);
+
+    if (!entry || !otherEntry) return;
+
+    var entryData = {};
+
+    if (direction == 'prev') {
+      entryData[id] = null;
+      entryData[otherId] = {name: entry.name};
+    } else {
+      entryData[id] = {name: otherEntry.name};
+      entryData[otherId] = null;
+    }
+
+    entries.update(entryData);
+
+    //TODO: Make entries.update() support null (to-delete) entry values
   },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
-        otherId = null;
+        otherEntry = direction == 'prev' ? entries.getBefore(id) : entries.getAfter(id);
 
-    if (direction == 'prev') otherId = entries.getIdBefore(id);
-    else otherId = entries.getIdAfter(id);
-
-    if (!entry || otherId === null) return;
-
-    var otherEntry = entries.get(otherId);
-
-    if (entry.name === otherEntry.name) return;
+    if (!entry || !otherEntry || entry.name === otherEntry.name) return;
 
     var entryData = {};
 
