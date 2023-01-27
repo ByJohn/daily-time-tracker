@@ -224,7 +224,11 @@ var entries = {
     for (const id in entryData) {
       if (! this.get(id)) continue;
 
-		  this.entries[id] = entryData[id];
+      if (entryData[id] === null) {
+        delete this.entries[id];
+      } else {
+		    this.entries[id] = entryData[id];
+      }
     }
 
 		this.save();

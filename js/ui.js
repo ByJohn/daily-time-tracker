@@ -333,12 +333,13 @@ var ui = {
 
     entries.updateId(id, newId);
   },
+  /**
+   * 
+   */
   mergeEntry: function(id, direction) {
     var entry = entries.get(id),
         otherId = direction == 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
         otherEntry = entries.get(otherId);
-
-    console.log(entry, otherEntry);
 
     if (!entry || !otherEntry) return;
 
@@ -348,13 +349,10 @@ var ui = {
       entryData[id] = null;
       entryData[otherId] = {name: entry.name};
     } else {
-      entryData[id] = {name: otherEntry.name};
       entryData[otherId] = null;
     }
 
     entries.update(entryData);
-
-    //TODO: Make entries.update() support null (to-delete) entry values
   },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
