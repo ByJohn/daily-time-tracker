@@ -334,7 +334,7 @@ var ui = {
     entries.updateId(id, newId);
   },
   /**
-   * 
+   * Essentially delete the second entry and set the name of the other entry to the one that was clicked.
    */
   mergeEntry: function(id, direction) {
     var entry = entries.get(id),
