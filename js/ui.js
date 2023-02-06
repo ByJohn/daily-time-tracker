@@ -258,6 +258,10 @@ var ui = {
         this.mergeEntry(id, action[1]);
         break;
 
+      case 'swap-time' :
+        this.swapEntryDuration(id, action[1]);
+        break;
+
       case 'swap-name' :
         this.swapEntryName(id, action[1]);
         break;
