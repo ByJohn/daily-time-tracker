@@ -358,6 +358,17 @@ var ui = {
 
     entries.update(entryData);
   },
+  swapEntryDuration: function(id, direction) {
+    var entry = entries.get(id),
+        otherEntry = direction == 'prev' ? entries.getBefore(id) : entries.getAfter(id);
+
+    if (!entry || !otherEntry || entry.name === otherEntry.name) return;
+
+    //HERE
+    /*
+    Set 2nd entry ID to 1st entry ID + duration of 2nd entry
+    */
+  },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
         otherEntry = direction == 'prev' ? entries.getBefore(id) : entries.getAfter(id);
