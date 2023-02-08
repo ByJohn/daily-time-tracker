@@ -360,7 +360,8 @@ var ui = {
   },
   swapEntryDuration: function(id, direction) {
     var entry = entries.get(id),
-        otherEntry = direction == 'prev' ? entries.getBefore(id) : entries.getAfter(id);
+        otherId = direction == 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
+        otherEntry = entries.get(otherId);
 
     if (!entry || !otherEntry || entry.name === otherEntry.name) return;
 
@@ -368,6 +369,19 @@ var ui = {
     /*
     Set 2nd entry ID to 1st entry ID + duration of 2nd entry
     */
+
+    var entryData = {};
+
+    if (direction == 'prev') {
+    } else {
+    }
+    
+    var newId2 = id1 + entries.getDuration(id2);
+
+    entryData[id] = null;
+    entryData[newId] = {name: entry.name};
+
+    entries.update(entryData);
   },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
