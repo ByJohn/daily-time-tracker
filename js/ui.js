@@ -365,21 +365,23 @@ var ui = {
 
     if (!entry || !otherEntry || entry.name === otherEntry.name) return;
 
-    //HERE
-    /*
-    Set 2nd entry ID to 1st entry ID + duration of 2nd entry
-    */
-
-    var entryData = {};
+    //Set 2nd entry ID to 1st entry ID + duration of 2nd entry
 
     if (direction == 'prev') {
+      var id1 = otherId,
+          id2 = id,
+          entry2 = entry;
     } else {
+      var id1 = id,
+          id2 = otherId,
+          entry2 = otherEntry;
     }
-    
-    var newId2 = id1 + entries.getDuration(id2);
 
-    entryData[id] = null;
-    entryData[newId] = {name: entry.name};
+    var entryData = {},
+        newId2 = id1 + entries.getDuration(id2);
+
+    entryData[id2] = null;
+    entryData[newId2] = {name: entry2.name};
 
     entries.update(entryData);
   },
