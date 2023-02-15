@@ -389,7 +389,8 @@ var ui = {
   },
   swapEntryName: function(id, direction) {
     var entry = entries.get(id),
-        otherEntry = direction == 'prev' ? entries.getBefore(id) : entries.getAfter(id);
+        otherId = direction == 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
+        otherEntry = entries.get(otherId);
 
     if (!entry || !otherEntry || entry.name === otherEntry.name) return;
 
