@@ -367,7 +367,7 @@ var ui = {
 
     //Set 2nd entry ID to 1st entry ID + duration of 2nd entry
 
-  //HERE: Not working
+    //HERE: Not working
 
     if (direction == 'prev') {
       var id1 = otherId,
