@@ -380,7 +380,7 @@ var ui = {
     }
 
     var entryData = {},
-        newId2 = id1 + entries.getDuration(id2);
+        newId2 = parseInt(id1) + parseInt(entries.getDuration(id2));
 
     entryData[id2] = null;
     entryData[newId2] = {name: entry2.name};
