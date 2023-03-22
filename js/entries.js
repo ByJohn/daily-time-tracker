@@ -222,7 +222,7 @@ var entries = {
     this.saveBackup(this.entries);
 
     for (const id in entryData) {
-      if (! this.get(id)) continue;
+      // if (! this.get(id)) continue;
 
       if (entryData[id] === null) {
         delete this.entries[id];
