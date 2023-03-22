@@ -384,6 +384,8 @@ var ui = {
 
     entryData[id2] = null;
     entryData[newId2] = {name: entry2.name};
+    
+    console.log(entryData);
 
     entries.update(entryData);
   },
