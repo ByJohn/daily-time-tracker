@@ -8,38 +8,38 @@
   "theme_color": "white",
   "icons": [
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-16.png?v=1624020555919",
+      "src": "images/clock-16.png",
       "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-128.png?v=1624020555919",
+      "src": "images/clock-128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-144.png?v=1624020555919",
+      "src": "images/clock-144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-152.png?v=1624020555919",
+      "src": "images/clock-152.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-192.png?v=1624020555919",
+      "src": "images/clock-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-256.png?v=1624020555919",
+      "src": "images/clock-256.png",
       "sizes": "256x256",
       "type": "image/png",
-      "purpose": "any maskable" 
+      "purpose": "any maskable"
     },
     {
-      "src": "https://cdn.glitch.com/62e3d4e2-a1fa-4585-9f18-cc4fee485333%2Fclock-512.png?v=1624020555919",
+      "src": "images/clock-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

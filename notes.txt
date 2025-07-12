@@ -1,11 +1,9 @@
 Time Tracker
 
-https://codepen.io/JohnEvans/pen/KKWqVyQ
-
 Spec
   Track start and end times
   Quick way to start and stop
-  Qucik way to label task
+  Quick way to label task
   Task presets for lunch, phone calls and breaks
   Online sync
 
