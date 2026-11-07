@@ -1,0 +1,18 @@
+{
+  "name": "daily-time-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.js\" --fix",
+    "format": "prettier --write \"src/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^10.0.1",
+    "globals": "^15.13.0",
+    "prettier": "^3.3.3"
+  }
+}

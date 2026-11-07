@@ -13,7 +13,8 @@ const filesToCache = [
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(
-		caches.open(cacheName)
+		caches
+			.open(cacheName)
 			.then((cache) => cache.addAll(filesToCache))
 			.catch((error) => {
 				console.warn('Unable to cache app shell', error);
@@ -53,7 +54,7 @@ function refresh(response) {
 			const message = {
 				type: 'refresh',
 				url: response.url,
-				eTag: response.headers.get('ETag')
+				eTag: response.headers.get('ETag'),
 			};
 
 			client.postMessage(JSON.stringify(message));

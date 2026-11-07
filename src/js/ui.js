@@ -1,3 +1,5 @@
+/* exported ui */
+/* global entries, util */
 const ui = {
 	$title: document.querySelector('head title'),
 	defaultTitle: '',
@@ -22,11 +24,15 @@ const ui = {
 		this.$prevDay.addEventListener('click', () => this.previousDay(), false);
 		this.$nextDay.addEventListener('click', () => this.nextDay(), false);
 
-		document.addEventListener('entries.reindex', () => {
-			this.updateUndoButton();
-			this.updateAddList();
-			this.refreshDay();
-		}, false);
+		document.addEventListener(
+			'entries.reindex',
+			() => {
+				this.updateUndoButton();
+				this.updateAddList();
+				this.refreshDay();
+			},
+			false
+		);
 
 		this.$addEntry.addEventListener('click', (event) => this.addEntry(event), false);
 		this.$timeline.addEventListener('click', (event) => this.maybeEntryActionClicked(event), false);

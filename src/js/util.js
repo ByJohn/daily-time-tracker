@@ -1,3 +1,4 @@
+/* exported util */
 const HUE_MAX = 360;
 const SECONDS_PER_MINUTE = 60;
 const SECONDS_PER_HOUR = 3600;
@@ -50,10 +51,13 @@ const util = {
 	secondsToDuration: function (seconds, showSeconds = 3, showMinutes = 3, showHours = 3) {
 		const totalSeconds = Number.parseInt(seconds, 10) || 0;
 		const hours = Math.floor(totalSeconds / SECONDS_PER_HOUR);
-		const minutes = Math.floor((totalSeconds - (hours * SECONDS_PER_HOUR)) / SECONDS_PER_MINUTE);
-		const remainingSeconds = totalSeconds - (hours * SECONDS_PER_HOUR) - (minutes * SECONDS_PER_MINUTE);
+		const minutes = Math.floor((totalSeconds - hours * SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+		const remainingSeconds = totalSeconds - hours * SECONDS_PER_HOUR - minutes * SECONDS_PER_MINUTE;
 
-		const secondsShowing = showSeconds === 3 || showSeconds === 2 || (showSeconds === 1 && (remainingSeconds > 0 || minutes > 0 || hours > 0));
+		const secondsShowing =
+			showSeconds === 3 ||
+			showSeconds === 2 ||
+			(showSeconds === 1 && (remainingSeconds > 0 || minutes > 0 || hours > 0));
 		const minutesShowing = showMinutes === 3 || showMinutes === 2 || (showMinutes === 1 && (minutes > 0 || hours > 0));
 		const hoursShowing = showHours === 3 || showHours === 2 || (showHours === 1 && hours > 0);
 

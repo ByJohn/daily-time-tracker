@@ -1,3 +1,5 @@
+/* exported entries */
+/* global util */
 const entries = {
 	entries: {},
 	backups: [],
@@ -190,7 +192,7 @@ const entries = {
 	getDuration: function (id) {
 		let next;
 
-		if (this.getIdActive() == id) {
+		if (this.getIdActive() === id) {
 			next = Math.round(new Date().getTime() / 1000);
 		} else {
 			next = this.getIdAfter(id);

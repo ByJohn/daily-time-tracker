@@ -1,3 +1,5 @@
+/* exported modal */
+/* global entries, ui, util */
 const modal = {
 	$modal: document.getElementById('modal'),
 	$background: document.getElementById('modal-background'),

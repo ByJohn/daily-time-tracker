@@ -1,3 +1,4 @@
+/* global entries, ui, modal */
 const tick = () => {
 	const activeID = entries.getIdActive();
 
