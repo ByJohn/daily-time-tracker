@@ -1,5 +1,4 @@
-//Modal
-var modal = {
+const modal = {
 	$modal: document.getElementById('modal'),
 	$background: document.getElementById('modal-background'),
 	$close: document.getElementById('modal-close'),
@@ -12,21 +11,21 @@ var modal = {
 		this.setupEvents();
 	},
 	setupEvents: function () {
-		ui.$edit.addEventListener('click', this.open.bind(this, 'edit-raw'), false);
-		ui.$export.addEventListener('click', this.open.bind(this, 'export'), false);
-		ui.$connect.addEventListener('click', this.open.bind(this, 'connect'), false);
+		ui.$edit.addEventListener('click', () => this.open('edit-raw'), false);
+		ui.$export.addEventListener('click', () => this.open('export'), false);
+		ui.$connect.addEventListener('click', () => this.open('connect'), false);
 
-		this.$close.addEventListener('click', this.close.bind(this), false);
-		this.$background.addEventListener('click', this.close.bind(this), false);
+		this.$close.addEventListener('click', () => this.close(), false);
+		this.$background.addEventListener('click', () => this.close(), false);
 
-		this.$editForm.addEventListener('submit', this.saveFromTextbox.bind(this), false);
+		this.$editForm.addEventListener('submit', (event) => this.saveFromTextbox(event), false);
 	},
 	open: function (pageID) {
-		[].forEach.call(this.$pages, function($page) {
+		Array.from(this.$pages).forEach(($page) => {
 			$page.classList.remove('active');
 		});
 
-		var $newPage = document.getElementById('modal-' + pageID);
+		const $newPage = document.getElementById(`modal-${pageID}`);
 
 		if ($newPage) {
 			$newPage.classList.add('active');
@@ -41,6 +40,8 @@ var modal = {
 			case 'export':
 				this.displayExport();
 				break;
+			default:
+				break;
 		}
 	},
 	close: function () {
@@ -49,49 +50,68 @@ var modal = {
 	loadIntoTextbox: function () {
 		this.$textarea.value = entries.getJSONString(true);
 	},
-	saveFromTextbox: function (e) {
-		e.preventDefault();
+	saveFromTextbox: function (event) {
+		event.preventDefault();
 
-		var success = entries.setFromJSONString(this.$textarea.value);
-
-		if (success) this.close();
+		const success = entries.setFromJSONString(this.$textarea.value);
+		if (success) {
+			this.close();
+		}
 	},
-	displayExport: function () {
-		var text = '',
-				entryTotals = {},
-        total = 0,
-        trackedTotal = 0,
-        untrackedTotal = 0;
+	getExportSummary: function () {
+		const entryTotals = {};
+		let total = 0;
+		let trackedTotal = 0;
+		let untrackedTotal = 0;
 
-		text += '<h3>' + util.formatDate(ui.getDayDate()) + '</h3>';
+		entries.forEachInDay(ui.getDay(), (id, entry) => {
+			if (!entry) {
+				return;
+			}
 
-		entries.forEachInDay(ui.getDay(), function(id, entry) {
-			var name = entry.name.trim(),
-          duration = entries.getDuration(id);
+			const name = typeof entry.name === 'string' ? entry.name.trim() : '';
+			const duration = Number(entries.getDuration(id)) || 0;
 
-      if (name) {
-        if (!entryTotals.hasOwnProperty(name)) {
-          entryTotals[name] = 0;
-        }
+			if (name) {
+				if (!Object.prototype.hasOwnProperty.call(entryTotals, name)) {
+					entryTotals[name] = 0;
+				}
 
-        entryTotals[name] += duration;
+				entryTotals[name] += duration;
+				trackedTotal += duration;
+			} else {
+				untrackedTotal += duration;
+			}
 
-        trackedTotal += duration;
-      } else {
-        untrackedTotal += duration;
-      }
-
-      total += duration;
+			total += duration;
 		});
 
-    entryTotals['Named Tasks Total'] = trackedTotal;
-    entryTotals['Unnamed Tasks Total'] = untrackedTotal;
-    entryTotals['Total'] = total;
-
-		for (var name in entryTotals) {
-			text += '<p><strong>' + name + '</strong>: ' + util.secondsToDuration(entryTotals[name], 0, 2, 2) + '</p>';
+		const summary = [];
+		for (const [name, value] of Object.entries(entryTotals)) {
+			summary.push({ name, value });
 		}
 
-		this.$exportOutput.innerHTML = text;
+		summary.push({ name: 'Named Tasks Total', value: trackedTotal });
+		summary.push({ name: 'Unnamed Tasks Total', value: untrackedTotal });
+		summary.push({ name: 'Total', value: total });
+
+		return summary;
+	},
+	displayExport: function () {
+		const fragment = document.createDocumentFragment();
+		const heading = document.createElement('h3');
+		heading.textContent = util.formatDate(ui.getDayDate());
+		fragment.appendChild(heading);
+
+		this.getExportSummary().forEach(({ name, value }) => {
+			const paragraph = document.createElement('p');
+			const label = document.createElement('strong');
+			label.textContent = name;
+			paragraph.appendChild(label);
+			paragraph.appendChild(document.createTextNode(`: ${util.secondsToDuration(value, 0, 2, 2)}`));
+			fragment.appendChild(paragraph);
+		});
+
+		this.$exportOutput.replaceChildren(fragment);
 	},
 };

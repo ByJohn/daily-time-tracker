@@ -1,67 +1,62 @@
-var cacheName = 'daily-time-tracker-cache',
-    filesToCache = [
-      '/',
-      '/index.html',
-      '/css/normalize.min.css',
-      '/css/style.css',
-      '/js/entries.js',
-      '/js/main.js',
-      '/js/modal.js',
-      '/js/ui.js',
-      '/js/util.js',
-    ];
+const cacheName = 'daily-time-tracker-cache';
+const filesToCache = [
+	'/',
+	'/index.html',
+	'/css/normalize.min.css',
+	'/css/style.css',
+	'/js/entries.js',
+	'/js/main.js',
+	'/js/modal.js',
+	'/js/ui.js',
+	'/js/util.js',
+];
 
-// Start the service worker and cache all of the app's content
-self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      return cache.addAll(filesToCache);
-    })
-  );
+self.addEventListener('install', (event) => {
+	event.waitUntil(
+		caches.open(cacheName)
+			.then((cache) => cache.addAll(filesToCache))
+			.catch((error) => {
+				console.warn('Unable to cache app shell', error);
+			})
+	);
 });
 
-//Serve cached content when offline
-self.addEventListener('fetch', function(e) {
-  var file = e.request.url.replace(self.location.origin, ''); //URL after the domain part
+self.addEventListener('fetch', (event) => {
+	const relativePath = event.request.url.replace(self.location.origin, '');
 
-  if (filesToCache.includes(file)) {
-    e.respondWith(fromCache(e.request));
-    
-    e.waitUntil(
-      update(e.request)
-      .then(refresh)
-    );
-  } else {
-    e.respondWith(fetch(e.request));
-  }
+	if (filesToCache.includes(relativePath)) {
+		event.respondWith(fromCache(event.request));
+		event.waitUntil(update(event.request).then(refresh));
+		return;
+	}
+
+	event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
 });
 
 function fromCache(request) {
-  return caches.open(cacheName).then(function (cache) {
-    return cache.match(request);
-  });
+	return caches.open(cacheName).then((cache) => cache.match(request));
 }
 
 function update(request) {
-  return caches.open(cacheName).then(function (cache) {
-    return fetch(request).then(function (response) {
-      return cache.put(request, response.clone()).then(function () {
-        return response;
-      });
-    });
-  });
+	return caches.open(cacheName).then(async (cache) => {
+		const response = await fetch(request);
+		if (response.ok) {
+			await cache.put(request, response.clone());
+		}
+		return response;
+	});
 }
 
 function refresh(response) {
-  return self.clients.matchAll().then(function (clients) {
-    clients.forEach(function (client) {
-      var message = {
-        type: 'refresh',
-        url: response.url,
-        eTag: response.headers.get('ETag')
-      };
+	return self.clients.matchAll().then((clients) => {
+		clients.forEach((client) => {
+			const message = {
+				type: 'refresh',
+				url: response.url,
+				eTag: response.headers.get('ETag')
+			};
 
-      client.postMessage(JSON.stringify(message));
-    });
-  });
+			client.postMessage(JSON.stringify(message));
+		});
+	});
 }

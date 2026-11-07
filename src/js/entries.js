@@ -1,137 +1,132 @@
-//Datastore
-var entries = {
+const entries = {
 	entries: {},
-  backups: [], //Will hold an array of previous iterations of the entries object
-	indexes: [], //Will hold an ordered list of the enrty times
-	days: [], //Will hold a nested array of entry IDs, grouped by day
-	names: [], //Will hold all of the unique entry names, most recent first
+	backups: [],
+	indexes: [],
+	days: [],
+	names: [],
 
 	init: function () {
-		//Any setup here
+		// Any setup here
 	},
 	getJSONString: function (pretty) {
-		var indent = typeof pretty !== 'undefined' ? "\t" : 0;
-
+		const indent = typeof pretty !== 'undefined' ? '\t' : 0;
 		return JSON.stringify(this.entries, null, indent);
 	},
-	setFromJSONString: function (json, save) {
-		save = typeof save !== 'undefined' ? save : true;
-		var entries = null;
+	setFromJSONString: function (json, save = true) {
+		let parsedEntries = null;
 
 		try {
-			entries = JSON.parse(json);
+			parsedEntries = JSON.parse(json);
 		} catch (error) {
-			console.error('JSON string of entries could not be parsed:' , json, error);
+			console.error('JSON string of entries could not be parsed:', json, error);
 		}
 
-		if (typeof entries === 'object' && entries !== null) {
-			this.entries = entries;
+		if (typeof parsedEntries === 'object' && parsedEntries !== null) {
+			this.entries = parsedEntries;
 
-			this.save();
+			if (save) {
+				this.save();
+			}
 
 			this.reindex();
-
 			return true;
-		} else {
-			console.error('Unable to set from JSON', entries);
 		}
 
+		console.error('Unable to set from JSON', parsedEntries);
 		return false;
 	},
 	load: function () {
-		var json = localStorage.getItem('timeTrackerData'); //Get the JSON data from storage
+		const json = localStorage.getItem('timeTrackerData');
 
 		if (json) {
 			return this.setFromJSONString(json, false);
-		} else {
-			this.reindex(); //Still reindex, in case there are some hard-coded entries
 		}
 
+		this.reindex();
 		return false;
 	},
 	save: function () {
 		localStorage.setItem('timeTrackerData', this.getJSONString());
 	},
 	reindex: function () {
-		var that = this;
+		const self = this;
 
-		//Set up the indexes
-		this.indexes = util.sortNumerically(Object.keys(this.entries).map(function (id) {return parseInt(id);}));
-		
-		//Set up the days
+		this.indexes = util.sortNumerically(Object.keys(this.entries).map((id) => Number.parseInt(id, 10)));
+
 		this.days = [];
-		var lastDate = null;
+		let lastDate = null;
 
-		this.forEach(function(id, entry) {
-			var date = util.secondsToDateObject(id);
-			
+		this.forEach((id) => {
+			const date = util.secondsToDateObject(id);
+
 			if (!lastDate || !util.datesAreOnSameDay(lastDate, date)) {
-				that.days.push([]);
+				self.days.push([]);
 			}
 
-			that.days[that.days.length - 1].push(id);
-
+			self.days[self.days.length - 1].push(id);
 			lastDate = date;
 		});
 
-		//Set up the names
 		this.names = [];
 
-		this.forEach(function(id, entry) {
-			var name = entry.name;
+		this.forEach((id) => {
+			const entry = this.get(id);
+			const name = entry && entry.name ? entry.name : null;
 
-			if (name) {
-				var index = that.names.indexOf(name);
-
-				if (index > -1) {
-					that.names.splice(index, 1); //Remove the existing instance from the array
-				}
-
-				that.names.unshift(name); //Add to start
+			if (!name) {
+				return;
 			}
+
+			const index = self.names.indexOf(name);
+
+			if (index > -1) {
+				self.names.splice(index, 1);
+			}
+
+			self.names.unshift(name);
 		});
 
 		document.dispatchEvent(new Event('entries.reindex'));
 	},
-  hasBackup: function () {
-    return this.backups.length > 0;
-  },
-  saveBackup: function (entries) {
-    this.backups.push(Object.assign({}, entries)); //Adds the value (not reference) of the entries object to the backups array
+	hasBackup: function () {
+		return this.backups.length > 0;
+	},
+	saveBackup: function (storedEntries) {
+		this.backups.push(Object.assign({}, storedEntries));
 
-    var limit = 5;
+		const limit = 5;
 
-    if (this.backups.length > limit) {
-      this.backups.splice(0, this.backups.length - limit); //Remove extra elements from the start of the backups array
-    }
-  },
-  getRestore: function () {
-    return this.backups.pop(); //Remove element from the end
-  },
-  restoreBackup: function () {
-    var restore = this.getRestore();
+		if (this.backups.length > limit) {
+			this.backups.splice(0, this.backups.length - limit);
+		}
+	},
+	getRestore: function () {
+		return this.backups.pop();
+	},
+	restoreBackup: function () {
+		const restore = this.getRestore();
 
-    if (typeof restore === 'undefined') return false;
-    
-    this.entries = restore;
+		if (typeof restore === 'undefined') {
+			return false;
+		}
 
-    this.save();
+		this.entries = restore;
+		this.save();
 		this.reindex();
-
-    return true;
-  },
+		return true;
+	},
 	getAll: function () {
 		return this.entries;
 	},
 	get: function (id) {
-		if (this.entries.hasOwnProperty(id)) {
+		if (Object.prototype.hasOwnProperty.call(this.entries, id)) {
 			return this.entries[id];
 		}
 
 		return null;
 	},
 	getIdBefore: function (id) {
-		var index = this.indexes.indexOf(parseInt(id));
+		const index = this.indexes.indexOf(Number.parseInt(id, 10));
 
 		if (index > -1 && typeof this.indexes[index - 1] !== 'undefined') {
 			return this.indexes[index - 1];
@@ -140,7 +135,7 @@ var entries = {
 		return null;
 	},
 	getIdAfter: function (id) {
-		var index = this.indexes.indexOf(parseInt(id));
+		const index = this.indexes.indexOf(Number.parseInt(id, 10));
 
 		if (index > -1 && typeof this.indexes[index + 1] !== 'undefined') {
 			return this.indexes[index + 1];
@@ -149,7 +144,7 @@ var entries = {
 		return null;
 	},
 	getIdActive: function () {
-		var count = this.indexes.length;
+		const count = this.indexes.length;
 
 		if (count > 0) {
 			return this.indexes[count - 1];
@@ -167,9 +162,9 @@ var entries = {
 		return this.get(this.getIdActive());
 	},
 	forEach: function (callback) {
-		this.indexes.forEach(function (id) {
+		this.indexes.forEach((id) => {
 			callback(id, this.get(id));
-		}, this);
+		});
 	},
 	getDay: function (day) {
 		if (typeof this.days[day] !== 'undefined') {
@@ -179,22 +174,24 @@ var entries = {
 		return [];
 	},
 	getLatestDayId: function () {
-		if (!this.days.length) return null;
+		if (!this.days.length) {
+			return null;
+		}
 
 		return this.days.length - 1;
 	},
 	forEachInDay: function (day, callback) {
-		var dayEntries = this.getDay(day);
+		const dayEntries = this.getDay(day);
 
-		dayEntries.forEach(function (id) {
+		dayEntries.forEach((id) => {
 			callback(id, this.get(id));
-		}, this);
+		});
 	},
 	getDuration: function (id) {
-		var next;
+		let next;
 
-		if (this.getIdActive() == id ) {
-			next = Math.round(new Date().getTime()/1000);
+		if (this.getIdActive() == id) {
+			next = Math.round(new Date().getTime() / 1000);
 		} else {
 			next = this.getIdAfter(id);
 		}
@@ -206,68 +203,70 @@ var entries = {
 		return next - id;
 	},
 	add: function (name) {
-    this.saveBackup(this.entries);
+		this.saveBackup(this.entries);
 
-		var id = Math.round(new Date().getTime() / 1000),
-			data = {
-				name: name,
-			};
+		const id = Math.round(new Date().getTime() / 1000);
+		const data = {
+			name,
+		};
 
 		this.entries[id] = data;
 		this.reindex();
 		this.save();
 	},
 	update: function (entryData) {
-    //TODO: Only backup if entryData is valid
-    this.saveBackup(this.entries);
+		if (!entryData || typeof entryData !== 'object') {
+			return false;
+		}
 
-    for (const id in entryData) {
-      // if (! this.get(id)) continue;
+		this.saveBackup(this.entries);
 
-      if (entryData[id] === null) {
-        delete this.entries[id];
-      } else {
-		    this.entries[id] = entryData[id];
-      }
-    }
+		for (const id in entryData) {
+			if (Object.prototype.hasOwnProperty.call(entryData, id)) {
+				if (entryData[id] === null) {
+					delete this.entries[id];
+				} else {
+					this.entries[id] = entryData[id];
+				}
+			}
+		}
 
 		this.save();
 		this.reindex();
+		return true;
 	},
-  /**
-   * Changes an entry ID and maintains accending order.
-   * If newId already exists, its data will be overridden.
-   */
-  updateId: function (oldId, newId) {
-    if (!Number.isInteger(oldId) || !Number.isInteger(newId) ||oldId === newId) return;
+	updateId: function (oldId, newId) {
+		if (!Number.isInteger(oldId) || !Number.isInteger(newId) || oldId === newId) {
+			return;
+		}
 
-    this.saveBackup(this.entries);
+		this.saveBackup(this.entries);
 
-    var that = this,
-        entries = {},
-        addedNewEntry = false;
+		const updatedEntries = {};
+		let addedNewEntry = false;
+		const self = this;
 
-    //New entry is inserted and entire entries list is ordered ascending
-    this.forEach(function (id) {
-      //If the current ID is greater than the new ID
-      if (id > newId) {
-        entries[newId] = that.entries[oldId]; //Quickly insert the new ID before the current ID
-        addedNewEntry = true;
-      }
+		this.forEach((id) => {
+			if (id > newId) {
+				updatedEntries[newId] = self.entries[oldId];
+				addedNewEntry = true;
+			}
 
-      //If the current ID is not the old ID (process all IDs except the old ID)
-      if (id !== oldId) {
-        entries[id] = that.entries[id];
-      }
-    });
+			if (id !== oldId) {
+				updatedEntries[id] = self.entries[id];
+			}
+		});
 
-    if (!addedNewEntry) {
-      entries[newId] = that.entries[oldId]; //Insert the new ID at the end as it must have been greater than all other IDs
-    }
+		if (!addedNewEntry) {
+			updatedEntries[newId] = this.entries[oldId];
+		}
 
-    this.entries = entries;
+		if (newId < oldId) {
+			delete updatedEntries[oldId];
+		}
 
-    this.save();
-    this.reindex();
-  },
+		this.entries = updatedEntries;
+		this.save();
+		this.reindex();
+	},
 };
