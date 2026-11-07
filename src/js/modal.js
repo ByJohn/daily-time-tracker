@@ -1,6 +1,8 @@
-/* exported modal */
-/* global entries, ui, util */
-const modal = {
+import { entries } from './entries.js';
+import { ui } from './ui.js';
+import { util } from './util.js';
+
+export const modal = {
 	$modal: document.getElementById('modal'),
 	$background: document.getElementById('modal-background'),
 	$close: document.getElementById('modal-close'),
@@ -9,10 +11,10 @@ const modal = {
 	$textarea: document.querySelector('.modal [name="json-data"]'),
 	$exportOutput: document.getElementById('export-output'),
 
-	init: function () {
+	init() {
 		this.setupEvents();
 	},
-	setupEvents: function () {
+	setupEvents() {
 		ui.$edit.addEventListener('click', () => this.open('edit-raw'), false);
 		ui.$export.addEventListener('click', () => this.open('export'), false);
 		ui.$connect.addEventListener('click', () => this.open('connect'), false);
@@ -22,7 +24,7 @@ const modal = {
 
 		this.$editForm.addEventListener('submit', (event) => this.saveFromTextbox(event), false);
 	},
-	open: function (pageID) {
+	open(pageID) {
 		Array.from(this.$pages).forEach(($page) => {
 			$page.classList.remove('active');
 		});
@@ -46,13 +48,13 @@ const modal = {
 				break;
 		}
 	},
-	close: function () {
+	close() {
 		this.$modal.classList.remove('open');
 	},
-	loadIntoTextbox: function () {
+	loadIntoTextbox() {
 		this.$textarea.value = entries.getJSONString(true);
 	},
-	saveFromTextbox: function (event) {
+	saveFromTextbox(event) {
 		event.preventDefault();
 
 		const success = entries.setFromJSONString(this.$textarea.value);
@@ -60,7 +62,7 @@ const modal = {
 			this.close();
 		}
 	},
-	getExportSummary: function () {
+	getExportSummary() {
 		const entryTotals = {};
 		let total = 0;
 		let trackedTotal = 0;
@@ -99,7 +101,7 @@ const modal = {
 
 		return summary;
 	},
-	displayExport: function () {
+	displayExport() {
 		const fragment = document.createDocumentFragment();
 		const heading = document.createElement('h3');
 		heading.textContent = util.formatDate(ui.getDayDate());

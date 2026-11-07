@@ -1,6 +1,7 @@
-/* exported ui */
-/* global entries, util */
-const ui = {
+import { entries } from './entries.js';
+import { util } from './util.js';
+
+export const ui = {
 	$title: document.querySelector('head title'),
 	defaultTitle: '',
 	$edit: document.getElementById('edit-raw'),
@@ -15,11 +16,11 @@ const ui = {
 	$addEntry: document.getElementById('add-entry'),
 	entryTemplate: document.getElementById('template-timeline-entry').innerHTML.trim(),
 
-	init: function () {
+	init() {
 		this.setupEvents();
 		this.defaultTitle = this.$title.textContent || '';
 	},
-	setupEvents: function () {
+	setupEvents() {
 		this.$undo.addEventListener('click', () => this.undo(), false);
 		this.$prevDay.addEventListener('click', () => this.previousDay(), false);
 		this.$nextDay.addEventListener('click', () => this.nextDay(), false);
@@ -37,34 +38,34 @@ const ui = {
 		this.$addEntry.addEventListener('click', (event) => this.addEntry(event), false);
 		this.$timeline.addEventListener('click', (event) => this.maybeEntryActionClicked(event), false);
 	},
-	updateUndoButton: function () {
+	updateUndoButton() {
 		this.$undo.toggleAttribute('disabled', !entries.hasBackup());
 	},
-	undo: function () {
+	undo() {
 		entries.restoreBackup();
 	},
-	getDay: function () {
+	getDay() {
 		return this.currentDay;
 	},
-	setDay: function (day) {
+	setDay(day) {
 		this.currentDay = day;
 		this.loadDay();
 	},
-	previousDay: function () {
+	previousDay() {
 		const targetDay = this.getDay() - 1;
 
 		if (entries.getDay(targetDay).length) {
 			this.setDay(targetDay);
 		}
 	},
-	nextDay: function () {
+	nextDay() {
 		const targetDay = this.getDay() + 1;
 
 		if (entries.getDay(targetDay).length) {
 			this.setDay(targetDay);
 		}
 	},
-	refreshDay: function () {
+	refreshDay() {
 		const day = this.getDay();
 
 		if (day !== null && entries.getDay(day).length > 0) {
@@ -81,7 +82,7 @@ const ui = {
 
 		this.setDay(null);
 	},
-	loadDay: function () {
+	loadDay() {
 		this.updateDayDate();
 		this.refreshTimeline();
 
@@ -89,7 +90,7 @@ const ui = {
 			this.scrollToBottom();
 		}
 	},
-	getDayDate: function () {
+	getDayDate() {
 		let date = new Date();
 		const day = this.getDay();
 
@@ -103,20 +104,20 @@ const ui = {
 
 		return date;
 	},
-	updateDayDate: function () {
+	updateDayDate() {
 		this.$currentDate.textContent = util.formatDate(this.getDayDate());
 	},
-	scrollToBottom: function () {
+	scrollToBottom() {
 		this.$timeline.scrollTop = this.$timeline.scrollHeight;
 	},
-	refreshTimeline: function () {
+	refreshTimeline() {
 		this.$timeline.innerHTML = '';
 
 		entries.forEachInDay(this.getDay(), (id) => {
 			this.addTimelineEntry(id);
 		});
 	},
-	addTimelineEntry: function (id) {
+	addTimelineEntry(id) {
 		const entry = entries.get(id);
 
 		if (!entry) {
@@ -152,7 +153,7 @@ const ui = {
 		this.updateTimelineEntry(id);
 		return true;
 	},
-	updateTimelineEntry: function (id) {
+	updateTimelineEntry(id) {
 		const entry = entries.get(id);
 		const $entry = document.getElementById(`entry-${id}`);
 		const secondsPixelsScale = 0.05;
@@ -168,7 +169,7 @@ const ui = {
 		$duration.textContent = util.secondsToDuration(duration);
 		return true;
 	},
-	updateAddList: function () {
+	updateAddList() {
 		const activeEntry = entries.getActive();
 		const $buttons = document.querySelectorAll('#add-entry button:not(#new)');
 
@@ -191,7 +192,7 @@ const ui = {
 
 		this.$addEntry.scrollTo(0, 0);
 	},
-	addEntry: function (event) {
+	addEntry(event) {
 		let name = '';
 		const target = event.target;
 
@@ -219,7 +220,7 @@ const ui = {
 		this.setDay(entries.getLatestDayId());
 		return true;
 	},
-	updateTitleElement: function (id) {
+	updateTitleElement(id) {
 		const entry = entries.get(id);
 		let title = this.defaultTitle;
 
@@ -229,7 +230,7 @@ const ui = {
 
 		this.$title.textContent = title;
 	},
-	maybeEntryActionClicked: function (event) {
+	maybeEntryActionClicked(event) {
 		const target = event.target;
 
 		if (!target || target.tagName.toLowerCase() !== 'button' || typeof target.dataset.entryAction === 'undefined') {
@@ -239,7 +240,7 @@ const ui = {
 		const entryId = target.closest('.entry') && target.closest('.entry').dataset.id;
 		this.processEntryAction(target.dataset.entryAction, entryId);
 	},
-	processEntryAction: function (action, id) {
+	processEntryAction(action, id) {
 		const entry = entries.get(id);
 
 		if (!entry) {
@@ -276,7 +277,7 @@ const ui = {
 				break;
 		}
 	},
-	editEntryStart: function (id, action) {
+	editEntryStart(id, action) {
 		id = Number.parseInt(id, 10);
 
 		let text = `${action} start`;
@@ -348,7 +349,7 @@ const ui = {
 
 		entries.updateId(id, newId);
 	},
-	mergeEntry: function (id, direction) {
+	mergeEntry(id, direction) {
 		const entry = entries.get(id);
 		const otherId = direction === 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
 		const otherEntry = entries.get(otherId);
@@ -368,7 +369,7 @@ const ui = {
 
 		entries.update(entryData);
 	},
-	swapEntryDuration: function (id, direction) {
+	swapEntryDuration(id, direction) {
 		const entry = entries.get(id);
 		const otherId = direction === 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
 		const otherEntry = entries.get(otherId);
@@ -399,7 +400,7 @@ const ui = {
 
 		entries.update(entryData);
 	},
-	swapEntryName: function (id, direction) {
+	swapEntryName(id, direction) {
 		const entry = entries.get(id);
 		const otherId = direction === 'prev' ? entries.getIdBefore(id) : entries.getIdAfter(id);
 		const otherEntry = entries.get(otherId);

@@ -1,5 +1,8 @@
-/* global entries, ui, modal */
-const tick = () => {
+import { entries } from './entries.js';
+import { modal } from './modal.js';
+import { ui } from './ui.js';
+
+export const tick = () => {
 	const activeID = entries.getIdActive();
 
 	if (activeID) {
@@ -8,7 +11,7 @@ const tick = () => {
 	}
 };
 
-const registerServiceWorker = () => {
+export const registerServiceWorker = () => {
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('../sw.js').catch((error) => {
 			console.warn('Service worker registration failed', error);
@@ -16,7 +19,7 @@ const registerServiceWorker = () => {
 	}
 };
 
-const init = () => {
+export const init = () => {
 	registerServiceWorker();
 	entries.init();
 	ui.init();

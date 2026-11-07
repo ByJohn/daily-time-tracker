@@ -1,18 +1,17 @@
-/* exported util */
-const HUE_MAX = 360;
-const SECONDS_PER_MINUTE = 60;
-const SECONDS_PER_HOUR = 3600;
-const MILLISECONDS_PER_SECOND = 1000;
+export const HUE_MAX = 360;
+export const SECONDS_PER_MINUTE = 60;
+export const SECONDS_PER_HOUR = 3600;
+export const MILLISECONDS_PER_SECOND = 1000;
 
-const util = {
-	sortNumerically: function (list) {
+export const util = {
+	sortNumerically(list) {
 		return [...list].sort((a, b) => a - b);
 	},
-	sortNumericallyReverse: function (list) {
+	sortNumericallyReverse(list) {
 		return [...list].sort((a, b) => b - a);
 	},
 	// See https://gist.github.com/0x263b/2bdd90886c2036a1ad5bcf06d6e6fb37
-	stringToHue: function (string = '') {
+	stringToHue(string = '') {
 		let hash = 0;
 
 		if (string.length === 0) {
@@ -26,12 +25,12 @@ const util = {
 
 		return Math.abs(hash) % HUE_MAX;
 	},
-	secondsToDateObject: function (seconds) {
+	secondsToDateObject(seconds) {
 		const time = new Date();
 		time.setTime(Number(seconds) * MILLISECONDS_PER_SECOND);
 		return time;
 	},
-	secondsToTime: function (seconds) {
+	secondsToTime(seconds) {
 		const time = util.secondsToDateObject(seconds);
 		let hours = time.getHours();
 		const minutes = time.getMinutes();
@@ -48,7 +47,7 @@ const util = {
 		return `${hours}:${paddedMinutes}${suffix}`;
 	},
 	// See https://stackoverflow.com/a/6313008/528423
-	secondsToDuration: function (seconds, showSeconds = 3, showMinutes = 3, showHours = 3) {
+	secondsToDuration(seconds, showSeconds = 3, showMinutes = 3, showHours = 3) {
 		const totalSeconds = Number.parseInt(seconds, 10) || 0;
 		const hours = Math.floor(totalSeconds / SECONDS_PER_HOUR);
 		const minutes = Math.floor((totalSeconds - hours * SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
@@ -90,14 +89,14 @@ const util = {
 
 		return parts.join(':');
 	},
-	datesAreOnSameDay: function (first, second) {
+	datesAreOnSameDay(first, second) {
 		return (
 			first.getFullYear() === second.getFullYear() &&
 			first.getMonth() === second.getMonth() &&
 			first.getDate() === second.getDate()
 		);
 	},
-	formatDate: function (date) {
+	formatDate(date) {
 		const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		return `${weekdays[date.getDay()]} ${date.toLocaleDateString('en-GB')}`;
 	},

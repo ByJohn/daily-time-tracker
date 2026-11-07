@@ -1,20 +1,20 @@
-/* exported entries */
-/* global util */
-const entries = {
+import { util } from './util.js';
+
+export const entries = {
 	entries: {},
 	backups: [],
 	indexes: [],
 	days: [],
 	names: [],
 
-	init: function () {
+	init() {
 		// Any setup here
 	},
-	getJSONString: function (pretty) {
+	getJSONString(pretty) {
 		const indent = typeof pretty !== 'undefined' ? '\t' : 0;
 		return JSON.stringify(this.entries, null, indent);
 	},
-	setFromJSONString: function (json, save = true) {
+	setFromJSONString(json, save = true) {
 		let parsedEntries = null;
 
 		try {
@@ -37,7 +37,7 @@ const entries = {
 		console.error('Unable to set from JSON', parsedEntries);
 		return false;
 	},
-	load: function () {
+	load() {
 		const json = localStorage.getItem('timeTrackerData');
 
 		if (json) {
@@ -47,10 +47,10 @@ const entries = {
 		this.reindex();
 		return false;
 	},
-	save: function () {
+	save() {
 		localStorage.setItem('timeTrackerData', this.getJSONString());
 	},
-	reindex: function () {
+	reindex() {
 		const self = this;
 
 		this.indexes = util.sortNumerically(Object.keys(this.entries).map((id) => Number.parseInt(id, 10)));
@@ -90,10 +90,10 @@ const entries = {
 
 		document.dispatchEvent(new Event('entries.reindex'));
 	},
-	hasBackup: function () {
+	hasBackup() {
 		return this.backups.length > 0;
 	},
-	saveBackup: function (storedEntries) {
+	saveBackup(storedEntries) {
 		this.backups.push(Object.assign({}, storedEntries));
 
 		const limit = 5;
@@ -102,10 +102,10 @@ const entries = {
 			this.backups.splice(0, this.backups.length - limit);
 		}
 	},
-	getRestore: function () {
+	getRestore() {
 		return this.backups.pop();
 	},
-	restoreBackup: function () {
+	restoreBackup() {
 		const restore = this.getRestore();
 
 		if (typeof restore === 'undefined') {
@@ -117,17 +117,17 @@ const entries = {
 		this.reindex();
 		return true;
 	},
-	getAll: function () {
+	getAll() {
 		return this.entries;
 	},
-	get: function (id) {
+	get(id) {
 		if (Object.prototype.hasOwnProperty.call(this.entries, id)) {
 			return this.entries[id];
 		}
 
 		return null;
 	},
-	getIdBefore: function (id) {
+	getIdBefore(id) {
 		const index = this.indexes.indexOf(Number.parseInt(id, 10));
 
 		if (index > -1 && typeof this.indexes[index - 1] !== 'undefined') {
@@ -136,7 +136,7 @@ const entries = {
 
 		return null;
 	},
-	getIdAfter: function (id) {
+	getIdAfter(id) {
 		const index = this.indexes.indexOf(Number.parseInt(id, 10));
 
 		if (index > -1 && typeof this.indexes[index + 1] !== 'undefined') {
@@ -145,7 +145,7 @@ const entries = {
 
 		return null;
 	},
-	getIdActive: function () {
+	getIdActive() {
 		const count = this.indexes.length;
 
 		if (count > 0) {
@@ -154,42 +154,42 @@ const entries = {
 
 		return null;
 	},
-	getBefore: function (id) {
+	getBefore(id) {
 		return this.get(this.getIdBefore(id));
 	},
-	getAfter: function (id) {
+	getAfter(id) {
 		return this.get(this.getIdAfter(id));
 	},
-	getActive: function () {
+	getActive() {
 		return this.get(this.getIdActive());
 	},
-	forEach: function (callback) {
+	forEach(callback) {
 		this.indexes.forEach((id) => {
 			callback(id, this.get(id));
 		});
 	},
-	getDay: function (day) {
+	getDay(day) {
 		if (typeof this.days[day] !== 'undefined') {
 			return this.days[day];
 		}
 
 		return [];
 	},
-	getLatestDayId: function () {
+	getLatestDayId() {
 		if (!this.days.length) {
 			return null;
 		}
 
 		return this.days.length - 1;
 	},
-	forEachInDay: function (day, callback) {
+	forEachInDay(day, callback) {
 		const dayEntries = this.getDay(day);
 
 		dayEntries.forEach((id) => {
 			callback(id, this.get(id));
 		});
 	},
-	getDuration: function (id) {
+	getDuration(id) {
 		let next;
 
 		if (this.getIdActive() === id) {
@@ -204,7 +204,7 @@ const entries = {
 
 		return next - id;
 	},
-	add: function (name) {
+	add(name) {
 		this.saveBackup(this.entries);
 
 		const id = Math.round(new Date().getTime() / 1000);
@@ -216,7 +216,7 @@ const entries = {
 		this.reindex();
 		this.save();
 	},
-	update: function (entryData) {
+	update(entryData) {
 		if (!entryData || typeof entryData !== 'object') {
 			return false;
 		}
@@ -237,7 +237,7 @@ const entries = {
 		this.reindex();
 		return true;
 	},
-	updateId: function (oldId, newId) {
+	updateId(oldId, newId) {
 		if (!Number.isInteger(oldId) || !Number.isInteger(newId) || oldId === newId) {
 			return;
 		}
